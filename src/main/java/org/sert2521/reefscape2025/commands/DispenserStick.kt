@@ -3,7 +3,7 @@ package org.sert2521.reefscape2025.commands
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.subsystems.Dispenser
 
-class DispenserIntake : Command() {
+class DispenserStick : Command() {
 
 
     init {
@@ -20,7 +20,7 @@ class DispenserIntake : Command() {
     }
 
     override fun isFinished(): Boolean {
-        return Dispenser.getBeamBreak()
+        return !Dispenser.getBeamBreak()
     }
 
     override fun end(interrupted: Boolean) {

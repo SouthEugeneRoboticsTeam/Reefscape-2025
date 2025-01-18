@@ -21,7 +21,7 @@ object Dispenser {
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
     }
     fun getBeamBreak():Boolean{
-        return !beamBreakSensor.get()
+        return beamBreakSensor.get()
     }
     fun setSpeed(speed:Double){
         dispenserMotor.set(speed)
