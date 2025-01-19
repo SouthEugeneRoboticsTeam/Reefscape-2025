@@ -21,6 +21,10 @@ object RuntimeConstants {
 }
 
 object SwerveConstants {
+    var swerveModuleData = listOf(
+
+    )
+
     const val DRIVE_MOTOR_INVERTED = false
     const val ANGLE_MOTOR_INVERTED = false
 
