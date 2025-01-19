@@ -13,7 +13,7 @@ class DispenserOuttake : Command() {
     }
 
     override fun initialize() {
-        Dispenser.setSpeed(TunedConstants.DISPENSER_SPEED)
+        Dispenser.setSpeed(TunedConstants.DISPENSER_OUTTAKE_SPEED)
     }
 
     override fun execute() {

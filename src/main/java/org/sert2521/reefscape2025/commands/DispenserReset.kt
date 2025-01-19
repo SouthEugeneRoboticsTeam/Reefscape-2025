@@ -5,7 +5,7 @@ import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.Dispenser
 
 class DispenserReset : Command() {
-    var triggered = 0
+    var triggered = false
 
     init {
         // each subsystem used by the command must be passed into the addRequirements() method
@@ -13,22 +13,18 @@ class DispenserReset : Command() {
     }
 
     override fun initialize() {
-        Dispenser.setSpeed(-TunedConstants.DISPENSER_SPEED)
+        Dispenser.setSpeed(-TunedConstants.DISPENSER_RESET_SPEED)
     }
 
     override fun execute() {
-        if (triggered == 0 && Dispenser.getBeamBreak()) {
-            triggered = 1
-            Dispenser.setSpeed(TunedConstants.DISPENSER_SPEED)
-        }
-        if (triggered == 1 && !Dispenser.getBeamBreak()) {
-            triggered = 2
-            Dispenser.stop()
+        if (!triggered && Dispenser.getBeamBreak()) {
+            triggered = true
+            Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
         }
     }
 
     override fun isFinished(): Boolean {
-        return triggered == 2
+        return triggered && !Dispenser.getBeamBreak()
     }
 
     override fun end(interrupted: Boolean) {
