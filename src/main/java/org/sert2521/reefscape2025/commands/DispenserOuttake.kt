@@ -1,6 +1,7 @@
 package org.sert2521.reefscape2025.commands
 
 import edu.wpi.first.wpilibj2.command.Command
+import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.Dispenser
 
 class DispenserOuttake : Command() {
@@ -12,7 +13,7 @@ class DispenserOuttake : Command() {
     }
 
     override fun initialize() {
-        Dispenser.setSpeed(1.0)
+        Dispenser.setSpeed(TunedConstants.DISPENSER_SPEED)
     }
 
     override fun execute() {
