@@ -11,12 +11,17 @@ import org.sert2521.reefscape2025.ElectronicIDs
 object Wrist : SubsystemBase() {
     private val wristMotor = SparkMax(ElectronicIDs.WRIST_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
     private val config = SparkMaxConfig()
+    //absolute encoder
 
-    init{
+    init {
         config.inverted(false)
         config.smartCurrentLimit(30)
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
         wristMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+    }
+
+    fun setheight(height:Double) {
+
     }
 
     fun stop(){
