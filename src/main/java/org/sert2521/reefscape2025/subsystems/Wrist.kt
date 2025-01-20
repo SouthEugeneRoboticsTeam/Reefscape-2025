@@ -32,15 +32,17 @@ object Wrist: SubsystemBase() {
 
     fun getEncoder() { absEncoder.get() }
 
-    // Not certain if this is correct,
     fun getRadians():Double {
-        var wristAngle = (absEncoder.get())* PhysicalConstants.WRIST_ENCODER_MULTIPLIER + PhysicalConstants.wristEncoderTransform
+
+        var wristAngle = (absEncoder.get())* PhysicalConstants.WRIST_ENCODER_MULTIPLIER + PhysicalConstants.WRIST_ENCODER_TRANSFORM
 
         if (wristAngle<-PI){
             wristAngle += 2* PI
         }
 
-        return wristAngle    }
+        return wristAngle
+
+    }
 
     fun getAmps(): Double { return wristMotor.outputCurrent }
 
