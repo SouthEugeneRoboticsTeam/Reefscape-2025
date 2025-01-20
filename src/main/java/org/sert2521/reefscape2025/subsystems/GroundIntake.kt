@@ -9,7 +9,7 @@ import org.sert2521.reefscape2025.ElectronicIDs
 
 object GroundIntake: Subsystem {
 
-    val rollerMotor = SparkMax(ElectronicIDs.INTAKE_ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
+    val rollerMotor = SparkMax(ElectronicIDs.GROUND_INTAKE_ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
     private val config = SparkMaxConfig()
 
     init {

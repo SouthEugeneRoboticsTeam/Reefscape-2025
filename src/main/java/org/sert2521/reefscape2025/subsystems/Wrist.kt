@@ -8,13 +8,14 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DutyCycleEncoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.sert2521.reefscape2025.ElectronicIDs
+import org.sert2521.reefscape2025.PhysicalConstants
 import kotlin.math.PI
 
 object Wrist: SubsystemBase() {
 
     private val wristMotor = SparkMax(ElectronicIDs.WRIST_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
     private val config = SparkMaxConfig()
-    val absEncoder = DutyCycleEncoder(1)
+    private val absEncoder = DutyCycleEncoder(ElectronicIDs.WRIST_ENCODER_ID)
 
     init {
 
@@ -31,11 +32,15 @@ object Wrist: SubsystemBase() {
 
     fun getEncoder() { absEncoder.get() }
 
+    // Not certain if this is correct,
     fun getRadians():Double {
-        var wristAngle = (absEncoder.distance+ PI /2).mod(2* PI) - PI /2 + PhysicalConsts.ARM_ENCODER_OFFSET
+        var wristAngle = (absEncoder.get())* PhysicalConstants.WRIST_ENCODER_MULTIPLIER + PhysicalConstants.wristEncoderTransform
 
-        return wristAngle
-    }
+        if (wristAngle<-PI){
+            wristAngle += 2* PI
+        }
+
+        return wristAngle    }
 
     fun getAmps(): Double { return wristMotor.outputCurrent }
 
