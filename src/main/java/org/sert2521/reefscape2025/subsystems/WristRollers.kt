@@ -7,7 +7,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj2.command.Subsystem
 import org.sert2521.reefscape2025.ElectronicIDs
 
-object GroundIntake: Subsystem {
+object WristRollers: Subsystem {
 
     val rollerMotor = SparkMax(ElectronicIDs.GROUND_INTAKE_ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
     private val config = SparkMaxConfig()
