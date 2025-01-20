@@ -90,7 +90,7 @@ abstract class SwerveModule(
     }
 
     fun set(wanted: SwerveModuleState) {
-        val optimized = SwerveModuleState.optimize() //TODO: Fix this, I don't know what it should be instead
+        val optimized = SwerveModuleState.optimize(state, getAngle()) //TODO: Fix this, I don't know what it should be instead
         val driveError = optimized.speedMetersPerSecond - driveMotor.encoder.velocity
 
         // In Marvin's code for this there is commented-out text about PIDFF stuff. However, since it's removed, I won't add it for now.

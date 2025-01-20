@@ -76,9 +76,9 @@ class JoystickDrive(private val fieldOriented: Boolean = true): Command() {
 
         }
 
-        override fun isFinished(): Boolean { return false }
+        /*override*/ fun isFinished(): Boolean { return false }
 
-        override fun end(interrupted: Boolean) { Drivetrain.stop() }
+        /*override*/ fun end(interrupted: Boolean) { Drivetrain.stop() }
 
     }
 
