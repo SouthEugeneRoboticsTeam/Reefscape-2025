@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import com.studica.frc.AHRS
+import edu.wpi.first.math.VecBuilder
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
@@ -19,7 +20,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.DrivetrainConstants
 import org.sert2521.reefscape2025.SwerveModuleData
 import org.sert2521.reefscape2025.commands.JoystickDrive
+import org.sert2521.reefscape2025.limelightlib.LimelightHelpers
 import kotlin.math.*
+
 
 class SwerveModule(
     private val driveMotor: SparkMax,
@@ -27,7 +30,8 @@ class SwerveModule(
     private val angleEncoder: CANcoder,
     private val angleOffset: Double,
     var state: SwerveModuleState,
-    brakeMode: Boolean) : MotorSafety() {
+    brakeMode: Boolean,
+) : MotorSafety() {
 
     var position: SwerveModulePosition
     private var goal = state
@@ -99,11 +103,10 @@ class SwerveModule(
         angleMotor.closedLoopController.setReference(optimized.angle.radians, SparkBase.ControlType.kPosition)
     }
 
-    fun getModuleGoal():SwerveModuleState {
-        return SwerveModuleState(goal.speedMetersPerSecond, Rotation2d(goal.angle.radians))
-    }
+    fun getModuleGoal():SwerveModuleState { return SwerveModuleState(goal.speedMetersPerSecond, Rotation2d(goal.angle.radians)) }
 
     fun setMotorMode(coast: Boolean, driveConfig:SparkMaxConfig, angleConfig:SparkMaxConfig) {
+
         if(coast) {
             driveConfig.idleMode(SparkBaseConfig.IdleMode.kCoast)
             angleConfig.idleMode(SparkBaseConfig.IdleMode.kCoast)
@@ -112,31 +115,23 @@ class SwerveModule(
             angleConfig.idleMode(SparkBaseConfig.IdleMode.kBrake)
         }
 
+
     }
 
-    fun getModuleReference(): Double {
-        return reference
-    }
+    fun getModuleReference(): Double { return reference }
 
-    fun getAmps() :Pair<Double, Double> {
-        return Pair(driveMotor.outputCurrent, angleMotor.outputCurrent)
-    }
+    fun getAmps() :Pair<Double, Double> { return Pair(driveMotor.outputCurrent, angleMotor.outputCurrent) }
 
-    fun setCurrentLimit(amps:Int, driveConfig: SparkMaxConfig) {
-        driveConfig.smartCurrentLimit(amps)
-    }
+    fun setCurrentLimit(amps:Int, driveConfig: SparkMaxConfig) { driveConfig.smartCurrentLimit(amps) }
 
      override fun stopMotor() {
         driveMotor.stopMotor()
         angleMotor.stopMotor()
     }
 
-    fun getEncoderHealth(): Double {
-        return angleEncoder.magnetHealth.valueAsDouble
-    }
+    fun getEncoderHealth(): Double { return angleEncoder.magnetHealth.valueAsDouble }
 
-    override fun getDescription(): String {
-        return "Swerve"
+    override fun getDescription(): String { return "Swerve"
     }
 }
 
@@ -192,18 +187,6 @@ object Drivetrain : SubsystemBase() {
 
     }
 
-    // "Fix this nonsense" -Whoever made the original code
-    fun getPose(): Pose2d {
-
-        return Pose2d(pose.y, pose.x, -pose.rotation)
-
-    }
-
-    fun getVisionPose(): Pose2d {
-
-        return Pose2d(visionPose.x, visionPose.y, -visionPose.rotation)
-
-    }
 
     // "Fix this nonsense" -Whoever made the original code
     private fun createModule(driveMotor: SparkMax, angleMotor:SparkMax, moduleData: SwerveModuleData): SwerveModule {
@@ -235,6 +218,9 @@ object Drivetrain : SubsystemBase() {
         val currTime = Timer.getFPGATimestamp()
         val deltaTime = currTime - prevTime
 
+        poseEstimator.update(imu.rotation2d, positionsArray)
+        visionEstimate()
+
         deltaPose = Pose2d((pose.y - prevPose.y) / deltaTime, (pose.x - prevPose.x) / deltaTime, -(pose.rotation - prevPose.rotation) / deltaTime)
 
         prevPose = pose
@@ -259,18 +245,11 @@ object Drivetrain : SubsystemBase() {
 
     }
 
-    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) }
-
-    fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
-
-    fun getAccelerationSquared():Double { return (imu.worldLinearAccelY.pow(2) + imu.worldLinearAccelX.pow(2)).toDouble() }
-
     private fun feed() {
 
         for (module in modules) {
             module.feed()
         }
-
     }
 
     fun drive(chassisSpeeds: ChassisSpeeds) {
@@ -300,11 +279,9 @@ object Drivetrain : SubsystemBase() {
 
     fun getTilt(): Double { return atan(sqrt(tan(Units.degreesToRadians(imu.pitch.toDouble())).pow(2) + tan(Units.degreesToRadians(imu.roll.toDouble())).pow(2))) }
 
-    fun getRoll(): Double {
+    fun getRoll(): Double { return Units.degreesToRadians(imu.roll.toDouble()) }
 
-        return Units.degreesToRadians(imu.roll.toDouble())
-
-    }
+    fun getAccelerationSquared():Double { return (imu.worldLinearAccelY.pow(2) + imu.worldLinearAccelX.pow(2)).toDouble() }
 
     fun getGoals(): Array<SwerveModuleState> { return arrayOf(modules[0].getModuleGoal(), modules[1].getModuleGoal(), modules[2].getModuleGoal(), modules[3].getModuleGoal()) }
 
@@ -318,12 +295,22 @@ object Drivetrain : SubsystemBase() {
 
     fun getHealth(module: Int): Double { return modules[module].getEncoderHealth() }
 
+    fun getYaw(): Double { return imu.yaw.toDouble() }
+
+    fun getVisionPose(): Pose2d { return poseEstimator.estimatedPosition }
+
+    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) }
+
+    fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
+
+    // "Fix this nonsense" -Whoever made the original code
+    fun getPose(): Pose2d { return Pose2d(pose.y, pose.x, -pose.rotation) }
+
     fun setMode(coast: Boolean, driveConfig: SparkMaxConfig, angleConfig: SparkMaxConfig) {
 
         for (module in modules) {
             module.setMotorMode(coast, driveConfig, angleConfig)
         }
-
     }
 
     fun setCurrentLimit(amps: Int, driveConfig: SparkMaxConfig) {
@@ -331,6 +318,23 @@ object Drivetrain : SubsystemBase() {
         for (module in modules) {
             module.setCurrentLimit(amps, driveConfig)
         }
+    }
+
+    fun visionEstimate() {
+
+        // First, tell Limelight your robot's current orientation
+        val robotYaw = getYaw()
+        LimelightHelpers.SetRobotOrientation("", robotYaw, 0.0, 0.0, 0.0, 0.0, 0.0)
+
+        // Get the pose estimate
+        val limelightMeasurement: LimelightHelpers.PoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue("")
+
+        // Add it to your pose estimator
+        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999999.0))
+        poseEstimator.addVisionMeasurement(
+            limelightMeasurement.pose,
+            limelightMeasurement.timestampSeconds
+        )
 
     }
 
@@ -343,6 +347,4 @@ object Drivetrain : SubsystemBase() {
         feed()
 
     }
-
-
 }

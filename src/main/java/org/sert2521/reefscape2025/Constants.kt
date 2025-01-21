@@ -111,7 +111,7 @@ object DrivetrainConstants {
     const val ROTATION_DEADBAND = 0.0
 }
 
-class SwerveModuleData(val position: Translation2d, val powerMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
+class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
 
 
 object VisionConstants {
