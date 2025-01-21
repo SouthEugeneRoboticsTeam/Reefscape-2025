@@ -5,6 +5,7 @@ import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj2.command.Subsystem
+import org.sert2521.reefscape2025.CurrentLimits
 import org.sert2521.reefscape2025.ElectronicIDs
 
 object WristRollers: Subsystem {
@@ -15,7 +16,7 @@ object WristRollers: Subsystem {
     init {
 
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
-        config.smartCurrentLimit(30)
+        config.smartCurrentLimit(CurrentLimits.WRIST_ROLLER_CURRENT_LIMIT)
         config.inverted(false)
 
     }

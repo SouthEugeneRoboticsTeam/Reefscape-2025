@@ -47,3 +47,10 @@ object RuntimeConstants {
     var wristSetpoint = 0.0
 
 }
+
+object CurrentLimits {
+
+    const val WRIST_CURRENT_LIMIT = 30
+    const val WRIST_ROLLER_CURRENT_LIMIT = 30
+
+}
