@@ -30,7 +30,6 @@ class SwerveModule(
     private val angleEncoder: CANcoder,
     private val angleOffset: Double,
     var state: SwerveModuleState,
-    brakeMode: Boolean,
 ) : MotorSafety() {
 
     var position: SwerveModulePosition
@@ -40,8 +39,8 @@ class SwerveModule(
 
     init{
 
-        var driveConfig = SparkMaxConfig()
-        var angleConfig = SparkMaxConfig()
+        val driveConfig = SparkMaxConfig()
+        val angleConfig = SparkMaxConfig()
 
         // Drive Motors
         driveConfig.inverted(DrivetrainConstants.DRIVE_MOTOR_INVERTED)
@@ -93,14 +92,12 @@ class SwerveModule(
     }
 
     fun set(wanted: SwerveModuleState) {
-        val optimized = SwerveModuleState.optimize(state, getAngle()) //TODO: Fix this, I don't know what it should be instead
-        val driveError = optimized.speedMetersPerSecond - driveMotor.encoder.velocity
+        wanted.optimize(getAngle())
+        val driveError = wanted.speedMetersPerSecond - driveMotor.encoder.velocity
 
-        // In Marvin's code for this there is commented-out text about PID/FF stuff. However, since it's removed, I won't add it for now.
-
-        goal = SwerveModuleState(optimized.speedMetersPerSecond, Rotation2d(optimized.angle.radians))
+        goal = SwerveModuleState(wanted.speedMetersPerSecond, Rotation2d(wanted.angle.radians))
         reference = driveError.pow(2) * sign(driveError) + driveMotor.encoder.velocity
-        angleMotor.closedLoopController.setReference(optimized.angle.radians, SparkBase.ControlType.kPosition)
+        angleMotor.closedLoopController.setReference(wanted.angle.radians, SparkBase.ControlType.kPosition)
     }
 
     fun getModuleGoal():SwerveModuleState { return SwerveModuleState(goal.speedMetersPerSecond, Rotation2d(goal.angle.radians)) }
@@ -180,8 +177,8 @@ object Drivetrain : SubsystemBase() {
         val positionsArray = positions.toTypedArray()
 
         kinematics = SwerveDriveKinematics(*modulePositions.toTypedArray())
-        odometry = SwerveDriveOdometry(kinematics, -imu.rotation2d, positionsArray, Pose2d())
-        poseEstimator = SwerveDrivePoseEstimator(kinematics, -imu.rotation2d, positionsArray, Pose2d())
+        odometry = SwerveDriveOdometry(kinematics, getYawAsRotation2d(), positionsArray, Pose2d())
+        poseEstimator = SwerveDrivePoseEstimator(kinematics, getYawAsRotation2d(), positionsArray, Pose2d())
 
         Drivetrain.defaultCommand = JoystickDrive(true)
 
@@ -196,8 +193,7 @@ object Drivetrain : SubsystemBase() {
             angleMotor,
             CANcoder(moduleData.angleEncoderID),
             moduleData.angleOffset,
-            SwerveModuleState(),
-            true
+            SwerveModuleState()
         )
 
     }
@@ -213,12 +209,12 @@ object Drivetrain : SubsystemBase() {
 
         val positionsArray = positions.toTypedArray()
 
-        pose = odometry.update(-imu.rotation2d, positionsArray)
+        pose = odometry.update(getYawAsRotation2d(), positionsArray)
 
         val currTime = Timer.getFPGATimestamp()
         val deltaTime = currTime - prevTime
 
-        poseEstimator.update(imu.rotation2d, positionsArray)
+        poseEstimator.update(getYawAsRotation2d(), positionsArray)
         visionEstimate()
 
         deltaPose = Pose2d((pose.y - prevPose.y) / deltaTime, (pose.x - prevPose.x) / deltaTime, -(pose.rotation - prevPose.rotation) / deltaTime)
@@ -230,7 +226,7 @@ object Drivetrain : SubsystemBase() {
 
     fun setNewPose(newPose:Pose2d) {
 
-        pose = Pose2d(newPose.y, newPose.x, -newPose.rotation)
+        pose = Pose2d(newPose.y, newPose.x, newPose.rotation)
 
         val positions = mutableListOf<SwerveModulePosition>()
 
@@ -241,7 +237,7 @@ object Drivetrain : SubsystemBase() {
 
         val positionsArray = positions.toTypedArray()
 
-        odometry.resetPosition(-imu.rotation2d, positionsArray, pose)
+        odometry.resetPosition(getYawAsRotation2d(), positionsArray, pose)
 
     }
 
@@ -295,7 +291,9 @@ object Drivetrain : SubsystemBase() {
 
     fun getHealth(module: Int): Double { return modules[module].getEncoderHealth() }
 
-    fun getYaw(): Double { return imu.yaw.toDouble() }
+    fun getYaw(): Double { return -imu.yaw.toDouble() }
+
+    fun getYawAsRotation2d(): Rotation2d { return Rotation2d.fromDegrees(-imu.angle) }
 
     fun getVisionPose(): Pose2d { return poseEstimator.estimatedPosition }
 
