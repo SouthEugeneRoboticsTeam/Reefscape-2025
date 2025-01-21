@@ -76,9 +76,7 @@ object DrivetrainConstants {
 
     const val TURN_SPEED = 0.0
 
-    var swerveModuleData = listOf(
-
-    )
+    var swerveModuleData = listOf()
 
     const val DRIVE_MOTOR_INVERTED = false
     const val ANGLE_MOTOR_INVERTED = false
