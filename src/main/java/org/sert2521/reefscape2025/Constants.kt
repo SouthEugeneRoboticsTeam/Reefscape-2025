@@ -28,9 +28,9 @@ object TunedConstants {
     const val DISPENSER_OUTTAKE_SPEED = 0.0
 
     const val WRIST_CORAL_INTAKE_SPEED = 0.0
-    const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be negative
+    const val WRIST_CORAL_OUTTAKE_SPEED = -0.0 //Should be negative
     const val WRIST_ALGAE_INTAKE_SPEED = 0.0
-    const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be negative
+    const val WRIST_ALGAE_OUTTAKE_SPEED = -0.0 //Should be negative
 }
 
 object CurrentLimits {
