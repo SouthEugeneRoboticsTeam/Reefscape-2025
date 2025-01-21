@@ -136,7 +136,7 @@ class SwerveModule(
     }
 
     override fun getDescription(): String {
-        return "SODIFJOSIDEJFOISJHUJFGYAUYVIOFJISEYFGUIVSHO"
+        return "Swerve"
     }
 }
 
@@ -232,8 +232,6 @@ object Drivetrain : SubsystemBase() {
 
         pose = odometry.update(-imu.rotation2d, positionsArray)
 
-        // Vision stuff I think?
-
         val currTime = Timer.getFPGATimestamp()
         val deltaTime = currTime - prevTime
 
@@ -260,34 +258,6 @@ object Drivetrain : SubsystemBase() {
         odometry.resetPosition(-imu.rotation2d, positionsArray, pose)
 
     }
-
-    /* Vision stuff I guess????
-    fun setNewVisionPose() {
-
-        val positions = mutableListOf<SwerveModulePosition>()
-
-        for (module in modules) {
-            module.updateState()
-            positions.add(module.position)
-        }
-
-        val positionsArray = positions.toTypedArray()
-
-        poseEstimator.resetPosition(-imu.rotation2d, positionsArray, newPose)
-
-    }
-
-    fun setVisionStandardDeviations() {
-
-        poseEstimator.setVisionMeasurementStdDevs(VisionConstants.defaultVisionDeviations)
-
-    }
-
-    fun setVisionAlignDeviations() {
-
-        poseEstimator.setVisionMeasurementStdDevs(VisionConstants.alignVisionDeviations)
-
-    }*/
 
     fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(modules[0].state, modules[1].state, modules[2].state, modules[3].state) }
 
