@@ -6,25 +6,14 @@ import org.sert2521.reefscape2025.subsystems.Dispenser
 
 class DispenserOuttake : Command() {
 
+    init { addRequirements(Dispenser) }
 
-    init {
-        // each subsystem used by the command must be passed into the addRequirements() method
-        addRequirements()
-    }
+    override fun initialize() { Dispenser.setSpeed(TunedConstants.DISPENSER_OUTTAKE_SPEED) }
 
-    override fun initialize() {
-        Dispenser.setSpeed(TunedConstants.DISPENSER_OUTTAKE_SPEED)
-    }
+    override fun execute() {}
 
-    override fun execute() {
+    override fun isFinished(): Boolean { return false }
 
-    }
+    override fun end(interrupted: Boolean) { Dispenser.stop() }
 
-    override fun isFinished(): Boolean {
-        return false
-    }
-
-    override fun end(interrupted: Boolean) {
-        Dispenser.stop()
-    }
 }

@@ -14,9 +14,6 @@ class DispenserIntake : Command() {
     }
 
     override fun initialize() {
-        if (Dispenser.getBeamBreak()) {
-            triggered = true
-        }
         Dispenser.setSpeed(TunedConstants.DISPENSER_INTAKE_SPEED)
     }
 
