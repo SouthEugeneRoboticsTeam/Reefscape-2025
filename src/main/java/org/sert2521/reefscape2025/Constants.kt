@@ -11,3 +11,9 @@ object TunedConstants {
     const val DISPENSER_RESET_SPEED = 1.0
     const val DISPENSER_OUTTAKE_SPEED = 1.0
 }
+
+object CurrentLimits {
+
+    const val DISPENSER_CURRENT_LIMIT = 30
+
+}
