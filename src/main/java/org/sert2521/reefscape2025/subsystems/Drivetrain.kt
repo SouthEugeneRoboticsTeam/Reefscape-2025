@@ -259,7 +259,7 @@ object Drivetrain : SubsystemBase() {
 
     }
 
-    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(modules[0].state, modules[1].state, modules[2].state, modules[3].state) }
+    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) }
 
     fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
 
@@ -318,10 +318,10 @@ object Drivetrain : SubsystemBase() {
 
     fun getHealth(module: Int): Double { return modules[module].getEncoderHealth() }
 
-    fun setMode(coast: Boolean) {
+    fun setMode(coast: Boolean, driveConfig: SparkMaxConfig, angleConfig: SparkMaxConfig) {
 
         for (module in modules) {
-            module.setMotorMode(coast)
+            module.setMotorMode(coast, driveConfig, angleConfig)
         }
 
     }
