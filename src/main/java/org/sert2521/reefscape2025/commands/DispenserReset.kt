@@ -10,7 +10,15 @@ class DispenserReset : Command() {
 
     init { addRequirements(Dispenser) }
 
-    override fun initialize() { Dispenser.setSpeed(-TunedConstants.DISPENSER_RESET_SPEED) }
+    override fun initialize() {
+        if (Dispenser.getBeamBreak()) {
+            triggered = true
+            Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
+        } else {
+            Dispenser.setSpeed(-TunedConstants.DISPENSER_RESET_SPEED)
+        }
+
+    }
 
     override fun execute() {
 
