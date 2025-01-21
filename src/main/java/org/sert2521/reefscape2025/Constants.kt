@@ -3,6 +3,7 @@ package org.sert2521.reefscape2025
 import edu.wpi.first.math.MatBuilder.fill
 import edu.wpi.first.math.Matrix
 import edu.wpi.first.math.Nat
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.numbers.N1
 import edu.wpi.first.math.numbers.N3
 
@@ -58,6 +59,9 @@ object DrivetrainConstants {
     const val DRIVE_DEADBAND = 0.0
     const val ROTATION_DEADBAND = 0.0
 }
+
+class SwerveModuleData(val position: Translation2d, val powerMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
+
 
 object VisionConstants {
 

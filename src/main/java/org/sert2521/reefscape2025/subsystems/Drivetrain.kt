@@ -7,7 +7,6 @@ import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import com.studica.frc.AHRS
-import edu.wpi.first.hal.simulation.AnalogGyroDataJNI.getAngle
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
@@ -18,17 +17,17 @@ import edu.wpi.first.wpilibj.MotorSafety
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.DrivetrainConstants
-import org.sert2521.reefscape2025.VisionConstants
+import org.sert2521.reefscape2025.SwerveModuleData
 import org.sert2521.reefscape2025.commands.JoystickDrive
 import kotlin.math.*
 
-abstract class SwerveModule(
+class SwerveModule(
     private val driveMotor: SparkMax,
     private val angleMotor: SparkMax,
     private val angleEncoder: CANcoder,
     private val angleOffset: Double,
     var state: SwerveModuleState,
-    brakemode: Boolean) : MotorSafety() {
+    brakeMode: Boolean) : MotorSafety() {
 
     var position: SwerveModulePosition
     private var goal = state
@@ -69,14 +68,14 @@ abstract class SwerveModule(
         angleConfig.encoder.positionConversionFactor(DrivetrainConstants.ANGLE_ENCODER_MULTIPLY)
         angleConfig.encoder.velocityConversionFactor(DrivetrainConstants.ANGLE_ENCODER_MULTIPLY / 60)
 
-        position = SwerveModulePosition(driveMotor.encoder.position, getAngle(0))
+        position = SwerveModulePosition(driveMotor.encoder.position, getAngle())
     }
 
     fun getAngle(): Rotation2d {
         if(inverted) {
             angleMotor.encoder.setPosition(angleEncoder.absolutePosition.valueAsDouble * DrivetrainConstants.ANGLE_ENCODER_MULTIPLY - angleOffset)
         }else{
-            angleMotor.encoder.setPosition((-(angleEncoder.absolutePosition.valueAsDouble * DrivetrainConstants.ANGLE_ENCODER_MULTIPLY - angleOffset))
+            angleMotor.encoder.setPosition((-(angleEncoder.absolutePosition.valueAsDouble * DrivetrainConstants.ANGLE_ENCODER_MULTIPLY - angleOffset)))
         }
 
         return Rotation2d((angleMotor.encoder.position+ PI).mod(2*PI)-PI)
@@ -93,7 +92,7 @@ abstract class SwerveModule(
         val optimized = SwerveModuleState.optimize(state, getAngle()) //TODO: Fix this, I don't know what it should be instead
         val driveError = optimized.speedMetersPerSecond - driveMotor.encoder.velocity
 
-        // In Marvin's code for this there is commented-out text about PIDFF stuff. However, since it's removed, I won't add it for now.
+        // In Marvin's code for this there is commented-out text about PID/FF stuff. However, since it's removed, I won't add it for now.
 
         goal = SwerveModuleState(optimized.speedMetersPerSecond, Rotation2d(optimized.angle.radians))
         reference = driveError.pow(2) * sign(driveError) + driveMotor.encoder.velocity
@@ -123,11 +122,11 @@ abstract class SwerveModule(
         return Pair(driveMotor.outputCurrent, angleMotor.outputCurrent)
     }
 
-    fun setCurrentLimit(amps:Int, driveConfig:SparkMaxConfig) {
+    fun setCurrentLimit(amps:Int, driveConfig: SparkMaxConfig) {
         driveConfig.smartCurrentLimit(amps)
     }
 
-    override fun stop() {
+     override fun stopMotor() {
         driveMotor.stopMotor()
         angleMotor.stopMotor()
     }
@@ -135,11 +134,15 @@ abstract class SwerveModule(
     fun getEncoderHealth(): Double {
         return angleEncoder.magnetHealth.valueAsDouble
     }
+
+    override fun getDescription(): String {
+        return "SODIFJOSIDEJFOISJHUJFGYAUYVIOFJISEYFGUIVSHO"
+    }
 }
 
 object Drivetrain : SubsystemBase() {
 
-    private val imu = AHRS()
+    private val imu = AHRS(AHRS.NavXComType.kMXP_SPI)
 
     private val kinematics: SwerveDriveKinematics
     private var modules: Array<SwerveModule>
@@ -203,10 +206,10 @@ object Drivetrain : SubsystemBase() {
     }
 
     // "Fix this nonsense" -Whoever made the original code
-    private fun createModule(powerMotor: SparkMax, angleMotor:SparkMax, moduleData: SwerveModuleData): SwerveModule {
+    private fun createModule(driveMotor: SparkMax, angleMotor:SparkMax, moduleData: SwerveModuleData): SwerveModule {
 
         return SwerveModule(
-            powerMotor,
+            driveMotor,
             angleMotor,
             CANcoder(moduleData.angleEncoderID),
             moduleData.angleOffset,
@@ -258,7 +261,8 @@ object Drivetrain : SubsystemBase() {
 
     }
 
-    fun setNewVisionPose{
+    /* Vision stuff I guess????
+    fun setNewVisionPose() {
 
         val positions = mutableListOf<SwerveModulePosition>()
 
@@ -281,7 +285,9 @@ object Drivetrain : SubsystemBase() {
 
     fun setVisionAlignDeviations() {
 
-        poseEstimator.setVisionMeasurementStdDevs(VisionConstants.alignVisionDeviations) }
+        poseEstimator.setVisionMeasurementStdDevs(VisionConstants.alignVisionDeviations)
+
+    }*/
 
     fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(modules[0].state, modules[1].state, modules[2].state, modules[3].state) }
 
@@ -314,7 +320,7 @@ object Drivetrain : SubsystemBase() {
         val unNormalized = Translation2d(atan(Units.degreesToRadians(imu.roll.toDouble())), atan(Units.degreesToRadians(imu.pitch.toDouble())))
         val norm = unNormalized.norm
 
-        if (norm == 0) {
+        if (norm == 0.0) {
             return unNormalized
         }
 
@@ -350,13 +356,10 @@ object Drivetrain : SubsystemBase() {
 
     }
 
-    // Something about climbing, probably not the same in this game?
-
-
-    fun setCurrentLimit(amps: Int) {
+    fun setCurrentLimit(amps: Int, driveConfig: SparkMaxConfig) {
 
         for (module in modules) {
-            module.setCurrentLimit(amps)
+            module.setCurrentLimit(amps, driveConfig)
         }
 
     }
@@ -364,7 +367,7 @@ object Drivetrain : SubsystemBase() {
     fun stop() {
 
         for (module in modules) {
-            module.stop()
+            module.stopMotor()
         }
 
         feed()
