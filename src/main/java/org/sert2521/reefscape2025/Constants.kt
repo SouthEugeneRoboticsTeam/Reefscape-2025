@@ -17,6 +17,19 @@ object ElectronicIDs {
     const val WRIST_ENCODER_ID = -1
     const val WRIST_MOTOR_ID = -1
     const val GROUND_INTAKE_ROLLER_ID = -1
+object ElectronicIDs {
+    const val DISPENSER_MOTOR_ID = -1
+    const val BEAMBREAK_ID = -1
+
+
+}
+object TunedConstants {
+    const val DISPENSER_INTAKE_SPEED = 1.0
+    const val DISPENSER_RESET_SPEED = 1.0
+    const val DISPENSER_OUTTAKE_SPEED = 1.0
+}
+
+object CurrentLimits {
 
 }
 
@@ -52,5 +65,8 @@ object CurrentLimits {
 
     const val WRIST_CURRENT_LIMIT = 30
     const val WRIST_ROLLER_CURRENT_LIMIT = 30
+
+}
+    const val DISPENSER_CURRENT_LIMIT = 30
 
 }
