@@ -1,8 +1,6 @@
 package org.sert2521.reefscape2025
 
-object ConfigConstants {
-
-}
+object ConfigConstants {}
 
 object PhysicalConstants {
 
@@ -17,28 +15,29 @@ object ElectronicIDs {
     const val WRIST_ENCODER_ID = -1
     const val WRIST_MOTOR_ID = -1
     const val GROUND_INTAKE_ROLLER_ID = -1
-object ElectronicIDs {
+
     const val DISPENSER_MOTOR_ID = -1
     const val BEAMBREAK_ID = -1
 
-
-}
-object TunedConstants {
-    const val DISPENSER_INTAKE_SPEED = 1.0
-    const val DISPENSER_RESET_SPEED = 1.0
-    const val DISPENSER_OUTTAKE_SPEED = 1.0
-}
-
-object CurrentLimits {
-
 }
 
 object TunedConstants {
+
+    const val DISPENSER_INTAKE_SPEED = 0.0
+    const val DISPENSER_RESET_SPEED = 0.0
+    const val DISPENSER_OUTTAKE_SPEED = 0.0
 
     const val WRIST_CORAL_INTAKE_SPEED = 0.0
     const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be negative
     const val WRIST_ALGAE_INTAKE_SPEED = 0.0
     const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be negative
+}
+
+object CurrentLimits {
+
+    const val WRIST_CURRENT_LIMIT = 30
+    const val WRIST_ROLLER_CURRENT_LIMIT = 30
+    const val DISPENSER_CURRENT_LIMIT = 30
 
 }
 
@@ -58,15 +57,5 @@ object PIDFFConstants {
 object RuntimeConstants {
 
     var wristSetpoint = 0.0
-
-}
-
-object CurrentLimits {
-
-    const val WRIST_CURRENT_LIMIT = 30
-    const val WRIST_ROLLER_CURRENT_LIMIT = 30
-
-}
-    const val DISPENSER_CURRENT_LIMIT = 30
 
 }

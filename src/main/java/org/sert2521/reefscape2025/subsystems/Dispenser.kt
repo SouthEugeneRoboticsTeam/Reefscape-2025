@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj2.command.Subsystem
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.sert2521.reefscape2025.CurrentLimits
 import org.sert2521.reefscape2025.ElectronicIDs
 
 
@@ -19,7 +20,7 @@ object Dispenser: SubsystemBase() {
     init{
 
         config.inverted(false)
-        config.smartCurrentLimit(30)
+        config.smartCurrentLimit(CurrentLimits.DISPENSER_CURRENT_LIMIT)
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
