@@ -43,21 +43,6 @@ object PIDFFConstants {
 }
 
 object RuntimeConstants {
-object ConfigConstants {
-
-}
-
-object PhysicalConstants {
-
-}
-
-object ElectronicIDs {
-
-}
-
-object TunedConstants {
-
-}
 
     var wristSetpoint = 0.0
 
