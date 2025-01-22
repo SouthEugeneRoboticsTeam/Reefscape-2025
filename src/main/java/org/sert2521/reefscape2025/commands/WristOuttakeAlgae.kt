@@ -9,7 +9,7 @@ class WristOuttakeAlgae(private val intakeSpeed: Double): Command() {
 
     init { addRequirements(WristRollers, Wrist) }
 
-    override fun initialize() { WristRollers.setSpeed(TunedConstants.WRIST_ALGAE_OUTTAKE_SPEED) }
+    override fun initialize() { WristRollers.setSpeed(-TunedConstants.WRIST_ALGAE_OUTTAKE_SPEED) }
 
     override fun execute() {}
 

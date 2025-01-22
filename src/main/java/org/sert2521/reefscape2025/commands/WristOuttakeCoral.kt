@@ -9,7 +9,7 @@ class WristOuttakeCoral(private val intakeSpeed: Double): Command() {
 
     init { addRequirements(WristRollers, Wrist) }
 
-    override fun initialize() { WristRollers.setSpeed(TunedConstants.WRIST_CORAL_OUTTAKE_SPEED) }
+    override fun initialize() { WristRollers.setSpeed(-TunedConstants.WRIST_CORAL_OUTTAKE_SPEED) }
 
     override fun execute() {}
 
