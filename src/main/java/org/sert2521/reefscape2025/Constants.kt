@@ -87,7 +87,8 @@ object DrivetrainConstants {
         SwerveModuleData(Translation2d(HALF_SIDE_LENGTH, -HALF_SIDE_LENGTH), 5, 7, 16, -0.355-1.61-1.56+ PI /2, false), //Back Left
         SwerveModuleData(Translation2d(-HALF_SIDE_LENGTH, -HALF_SIDE_LENGTH), 1, 2, 15, -0.138-1.57-1.54+ PI /2, false), //Back Right
         SwerveModuleData(Translation2d(HALF_SIDE_LENGTH, HALF_SIDE_LENGTH), 16, 15, 14, 2.41-1.612-1.58+ PI /2, false), //Front Left
-        SwerveModuleData(Translation2d(-HALF_SIDE_LENGTH, HALF_SIDE_LENGTH), 3, 12, 13, 0.059-1.568-1.575+ PI /2, false)) //Front Right
+        SwerveModuleData(Translation2d(-HALF_SIDE_LENGTH, HALF_SIDE_LENGTH), 3, 12, 13, 0.059-1.568-1.575+ PI /2, false) //Front Right
+    )
 
     const val DRIVE_MOTOR_INVERTED = false
     const val ANGLE_MOTOR_INVERTED = false
@@ -112,11 +113,3 @@ object DrivetrainConstants {
 }
 
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
-
-
-object VisionConstants {
-
-    val defaultVisionDeviations: Matrix<N3, N1> = fill(Nat.N3(), Nat.N1(), 0.4, 0.4, 3.0)
-    val alignVisionDeviations: Matrix<N3, N1> = fill(Nat.N3(), Nat.N1(),0.4, 0.4, 3.0)
-
-}
