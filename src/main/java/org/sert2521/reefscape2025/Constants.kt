@@ -1,11 +1,6 @@
 package org.sert2521.reefscape2025
 
-import edu.wpi.first.math.MatBuilder.fill
-import edu.wpi.first.math.Matrix
-import edu.wpi.first.math.Nat
 import edu.wpi.first.math.geometry.Translation2d
-import edu.wpi.first.math.numbers.N1
-import edu.wpi.first.math.numbers.N3
 import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
 
