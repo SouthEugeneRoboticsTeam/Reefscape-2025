@@ -1,6 +1,6 @@
 //LimelightHelpers v1.10 (REQUIRES LLOS 2024.9.1 OR LATER)
 
-package org.sert2521.reefscape2025.limelightlib;
+package org.sert2521.reefscape2025.libs;
 
 import edu.wpi.first.networktables.DoubleArrayEntry;
 import edu.wpi.first.networktables.NetworkTable;
