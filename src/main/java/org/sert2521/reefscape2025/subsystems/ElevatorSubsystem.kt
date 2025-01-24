@@ -21,12 +21,12 @@ object ElevatorSubsystem : SubsystemBase() {
     init {
 
         motorTwoConfig.inverted(false)
-        motorTwoConfig.smartCurrentLimit(40)
-        motorTwoConfig.idleMode(SparkBaseConfig.IdleMode.kBrake)
+            .smartCurrentLimit(40)
+            .idleMode(SparkBaseConfig.IdleMode.kBrake)
 
         motorOneConfig.inverted(false)
-        motorOneConfig.smartCurrentLimit(40)
-        motorOneConfig.idleMode(SparkBaseConfig.IdleMode.kBrake)
+            .smartCurrentLimit(40)
+            .idleMode(SparkBaseConfig.IdleMode.kBrake)
 
         motorOne.configure(
             motorOneConfig,
