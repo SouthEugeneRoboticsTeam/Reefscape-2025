@@ -297,7 +297,7 @@ object Drivetrain : SubsystemBase() {
 
     fun getVisionPose(): Pose2d { return poseEstimator.estimatedPosition }
 
-    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) }
+    fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(*arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) } // Yes it says that the asterisk is wrong, but it is correct.
 
     fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
 
