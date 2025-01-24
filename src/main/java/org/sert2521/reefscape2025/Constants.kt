@@ -4,9 +4,9 @@ import edu.wpi.first.math.geometry.Translation2d
 import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
 
-object ConfigConstants {
+object ConfigConstants { // Drivetrain configs are now in DrivetrainConstants
 
-    // Drivetrain configs are in DrivetrainConstants
+
 
 }
 
@@ -105,6 +105,8 @@ object DrivetrainConstants {
 
     const val DRIVE_DEADBAND = 0.0
     const val ROTATION_DEADBAND = 0.0
+
 }
 
+// Creates a class for the swerve modules in the drivetrain
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
