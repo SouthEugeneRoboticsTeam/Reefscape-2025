@@ -1,6 +1,7 @@
 package org.sert2521.reefscape2025.subsystems
 
 import com.ctre.phoenix6.configs.CANrangeConfiguration
+
 import com.ctre.phoenix6.hardware.core.CoreCANrange
 import com.revrobotics.spark.SparkBase
 import com.revrobotics.spark.SparkLowLevel
@@ -15,10 +16,17 @@ object ElevatorSubsystem : SubsystemBase() {
     private val motorTwo = SparkMax(ElectronicIDs.elevatorMotorTwo, SparkLowLevel.MotorType.kBrushless)
     private val motorOneConfig = SparkMaxConfig()
     private val motorTwoConfig = SparkMaxConfig()
-    private val CANrange = CoreCANrange(ElectronicIDs.TOFSensorID, "0") // TODO("set CAN ID)
-    private val CANrangeConfiguration: CANrangeConfiguration = CANrangeConfiguration()
+    private val CANRange = CoreCANrange(ElectronicIDs.TOFSensorID, "0")
+    private val CANRangeConfigurator = CANRange.configurator
+    private val CANRangeConfig = CANrangeConfiguration()
 
     init {
+        CANRangeConfig.FovParams.FOVRangeX = 6.75
+        CANRangeConfig.FovParams.FOVRangeY = 6.75
+        CANRangeConfig.ProximityParams.ProximityThreshold = 0.05
+        CANRangeConfig.ProximityParams.ProximityHysteresis = 0.005
+
+        CANRangeConfigurator.apply(CANRangeConfig)
 
         motorTwoConfig.inverted(false)
             .smartCurrentLimit(40)
@@ -52,10 +60,13 @@ object ElevatorSubsystem : SubsystemBase() {
     }
 
     fun getDistance(): Double {
-        CANrange.distance.refresh()
-        val distanceObject = CANrange.distance.value
-        val units = distanceObject.unit() // not sure what the units are by default - probably meters
+        CANRange.distance.refresh()
+        val distance = CANRange.distance.value
+        return distance.`in`(distance.unit())
+    }
 
-        return distanceObject.`in`(units)
+    fun stopMotors() {
+        motorTwo.stopMotor()
+        motorOne.stopMotor()
     }
 }
