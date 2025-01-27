@@ -72,6 +72,10 @@ class SwerveModule(
         angleConfig.encoder.velocityConversionFactor(DrivetrainConstants.ANGLE_ENCODER_MULTIPLY / 60)
 
         position = SwerveModulePosition(driveMotor.encoder.position, getAngle())
+
+        angleMotor.configure(angleConfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        driveMotor.configure(driveConfig, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+
     }
 
     fun getAngle(): Rotation2d {
@@ -302,7 +306,7 @@ object Drivetrain : SubsystemBase() {
     fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
 
     // "Fix this nonsense" -Whoever made the original code
-    fun getPose(): Pose2d { return Pose2d(pose.y, pose.x, -pose.rotation) }
+    fun getPose(): Pose2d { return Pose2d(pose.y, pose.x, pose.rotation) }
 
     fun setMode(coast: Boolean, driveConfig: SparkMaxConfig, angleConfig: SparkMaxConfig) {
 

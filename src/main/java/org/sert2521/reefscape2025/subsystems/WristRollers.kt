@@ -1,5 +1,6 @@
 package org.sert2521.reefscape2025.subsystems
 
+import com.revrobotics.spark.SparkBase
 import com.revrobotics.spark.SparkLowLevel
 import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
@@ -18,6 +19,8 @@ object WristRollers: Subsystem {
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
         config.smartCurrentLimit(CurrentLimits.WRIST_ROLLER_CURRENT_LIMIT)
         config.inverted(false)
+
+        rollerMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
     }
 

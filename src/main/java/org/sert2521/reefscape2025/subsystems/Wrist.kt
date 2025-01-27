@@ -23,6 +23,7 @@ object Wrist: SubsystemBase() {
         config.inverted(false)
         config.smartCurrentLimit(CurrentLimits.WRIST_CURRENT_LIMIT)
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
+
         wristMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
     }

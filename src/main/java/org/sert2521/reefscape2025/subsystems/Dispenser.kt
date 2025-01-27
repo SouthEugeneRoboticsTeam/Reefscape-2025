@@ -23,6 +23,8 @@ object Dispenser: SubsystemBase() {
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
+        dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+
     }
 
     fun getBeamBreak():Boolean{ return !beamBreakSensor.get() }
