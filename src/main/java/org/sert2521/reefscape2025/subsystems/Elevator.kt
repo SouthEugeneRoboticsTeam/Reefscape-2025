@@ -11,7 +11,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.sert2521.reefscape2025.ElectronicIDs
 
-object ElevatorSubsystem : SubsystemBase() {
+object Elevator : SubsystemBase() {
     private val motorOne = SparkMax(ElectronicIDs.elevatorMotorOne, SparkLowLevel.MotorType.kBrushless)
     private val motorTwo = SparkMax(ElectronicIDs.elevatorMotorTwo, SparkLowLevel.MotorType.kBrushless)
     private val motorOneConfig = SparkMaxConfig()
