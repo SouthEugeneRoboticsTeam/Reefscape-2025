@@ -32,13 +32,9 @@ object Elevator : SubsystemBase() {
             .smartCurrentLimit(40)
             .idleMode(SparkBaseConfig.IdleMode.kBrake)
 
-        motorTwoConfig.encoder.inverted(false)
-
         motorOneConfig.inverted(false)
             .smartCurrentLimit(40)
             .idleMode(SparkBaseConfig.IdleMode.kBrake)
-
-        motorOneConfig.encoder.inverted(false)
 
         motorOne.configure(
             motorOneConfig,
@@ -56,11 +52,6 @@ object Elevator : SubsystemBase() {
     fun setVoltage(voltage: Double) {
         motorOne.setVoltage(voltage)
         motorTwo.setVoltage(voltage)
-    }
-
-    fun setSpeed(speed: Double) {
-        motorOne.set(speed)
-        motorTwo.set(speed)
     }
 
     fun getDistance(): Double {
