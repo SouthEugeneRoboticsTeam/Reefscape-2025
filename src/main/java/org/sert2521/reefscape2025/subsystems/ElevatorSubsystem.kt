@@ -32,9 +32,13 @@ object ElevatorSubsystem : SubsystemBase() {
             .smartCurrentLimit(40)
             .idleMode(SparkBaseConfig.IdleMode.kBrake)
 
+        motorTwoConfig.encoder.inverted(false)
+
         motorOneConfig.inverted(false)
             .smartCurrentLimit(40)
             .idleMode(SparkBaseConfig.IdleMode.kBrake)
+
+        motorOneConfig.encoder.inverted(false)
 
         motorOne.configure(
             motorOneConfig,
