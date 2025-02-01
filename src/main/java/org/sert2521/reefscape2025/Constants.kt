@@ -1,12 +1,19 @@
 package org.sert2521.reefscape2025
 
+import com.pathplanner.lib.config.PIDConstants
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.math.system.plant.DCMotor
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.Units.Pounds
 import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
 
 object ConfigConstants { // Drivetrain configs are now in DrivetrainConstants
 
-
+    const val WRIST_STOW_SETPOINT = 0.0
+    const val WRIST_GROUND_SETPOINT = 0.0
+    const val WRIST_L1_SETPOINT = 0.0
+    const val WRIST_ALGAE_SETPOINT = 0.0
 
 }
 
@@ -18,6 +25,9 @@ object PhysicalConstants {
 
     const val HALF_SIDE_LENGTH = 0.0
     const val DRIVE_BASE_RADIUS = 0.0
+
+    val robotMass = Pounds.of(115.0)
+    val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
 
 }
 
@@ -105,6 +115,19 @@ object DrivetrainConstants {
 
     const val DRIVE_DEADBAND = 0.0
     const val ROTATION_DEADBAND = 0.0
+
+    // Auto Stuff I Guess
+    val autoTranslationPID = PIDConstants(0.0, 0.0, 0.0)
+    val autoRotationPID = PIDConstants(0.0, 0.0, 0.0)
+
+    const val WHEEL_COF = 1.54
+    const val WHEEL_RADIUS_METERS = 0.0508
+
+    const val MAX_SPEED_MPS  = 4.571
+
+    val driveMotorGearbox = DCMotor.getNEO(1).withReduction(6.75)
+
+    const val DRIVE_AUTO_CURRENT_LIMIT = 0
 
 }
 

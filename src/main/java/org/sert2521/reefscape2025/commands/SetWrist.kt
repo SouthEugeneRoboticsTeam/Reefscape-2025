@@ -8,7 +8,7 @@ import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.WristRollers
 import org.sert2521.reefscape2025.subsystems.Wrist
 
-class SetWrist: Command() {
+class SetWrist(private var goal: Double): Command() {
 
     private val pid = PIDController(PIDFFConstants.WRIST_P, PIDFFConstants.WRIST_I, PIDFFConstants.WRIST_D)
     private val feedForward = ArmFeedforward(PIDFFConstants.WRIST_S, PIDFFConstants.WRIST_G, PIDFFConstants.WRIST_V, PIDFFConstants.WRIST_A)
@@ -22,7 +22,9 @@ class SetWrist: Command() {
     override fun execute() {
 
         angle = Wrist.getRadians()
-        Wrist.setVoltage(pid.calculate(angle, RuntimeConstants.wristSetpoint) + feedForward.calculate(angle, 0.0))
+        goal = RuntimeConstants.wristSetpoint
+
+        Wrist.setVoltage(pid.calculate(angle, goal) + feedForward.calculate(angle, 0.0))
 
     }
 

@@ -5,7 +5,7 @@ import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.WristRollers
 import org.sert2521.reefscape2025.subsystems.Wrist
 
-class WristOuttakeAlgae(private val intakeSpeed: Double): Command() {
+class WristOuttakeAlgae(): Command() {
 
     init { addRequirements(WristRollers, Wrist) }
 

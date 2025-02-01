@@ -5,7 +5,7 @@ import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.WristRollers
 import org.sert2521.reefscape2025.subsystems.Wrist
 
-class WristIntakeCoral(private val intakeSpeed: Double): Command() {
+class WristIntakeCoral(): Command() {
 
     init { addRequirements(WristRollers, Wrist) }
 
