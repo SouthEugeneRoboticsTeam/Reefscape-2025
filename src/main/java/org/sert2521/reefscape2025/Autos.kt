@@ -38,7 +38,12 @@ object Autos {
         "L1 Outtake" to WristOuttakeCoral(),
 
         "Dispenser Intake" to DispenserIntake(),
-        "Dispenser Outtake" to DispenserOuttake()
+        "Dispenser Outtake" to DispenserOuttake(),
+
+        "Elevator Stow" to Commands.none(),
+        "Elevator L2" to Commands.none(),
+        "Elevator L3" to Commands.none(),
+        "Elevator L4" to Commands.none()
 
     )
 
