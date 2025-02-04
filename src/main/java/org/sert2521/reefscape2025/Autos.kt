@@ -4,14 +4,11 @@ import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.config.ModuleConfig
 import com.pathplanner.lib.config.RobotConfig
 import com.pathplanner.lib.controllers.PPHolonomicDriveController
-import edu.wpi.first.math.controller.HolonomicDriveController
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import org.sert2521.reefscape2025.commands.*
 import org.sert2521.reefscape2025.subsystems.Drivetrain
-import org.sert2521.reefscape2025.subsystems.WristRollers
-import java.io.ObjectInputFilter.Config
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,7 +59,7 @@ object Autos {
                 PhysicalConstants.momentOfInertia,
                 ModuleConfig(
                     DrivetrainConstants.WHEEL_RADIUS_METERS,
-                    DrivetrainConstants.MAX_SPEED_MPS,
+                    DrivetrainConstants.MAX_ANGULAR_SPEED,
                     DrivetrainConstants.WHEEL_COF,
                     DrivetrainConstants.driveMotorGearbox,
                     DrivetrainConstants.DRIVE_AUTO_CURRENT_LIMIT.toDouble(),

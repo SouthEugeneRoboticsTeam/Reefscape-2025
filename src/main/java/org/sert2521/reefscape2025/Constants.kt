@@ -1,6 +1,7 @@
 package org.sert2521.reefscape2025
 
 import com.pathplanner.lib.config.PIDConstants
+import edu.wpi.first.math.filter.SlewRateLimiter
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Units
@@ -123,11 +124,19 @@ object DrivetrainConstants {
     const val WHEEL_COF = 1.54
     const val WHEEL_RADIUS_METERS = 0.0508
 
-    const val MAX_SPEED_MPS  = 4.571
+    const val MAX_ANGULAR_SPEED  = 4.571
+    const val MAX_ROT_SPEED = 0.0 // TODO: Change this
 
     val driveMotorGearbox = DCMotor.getNEO(1).withReduction(6.75)
 
     const val DRIVE_AUTO_CURRENT_LIMIT = 0
+
+    const val VISION_AIM_P = 0.0
+    const val VISION_RANGE_P = 0.0
+
+    val VISION_X_SPEED_LIMIT = SlewRateLimiter(3.0)
+    val VISION_Y_SPEED_LIMIT = SlewRateLimiter(3.0)
+    val VISION_ROT_SPEED_LIMIT = SlewRateLimiter(3.0)
 
 }
 
