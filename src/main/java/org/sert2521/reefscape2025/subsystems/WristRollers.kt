@@ -26,6 +26,8 @@ object WristRollers: Subsystem {
 
     fun setSpeed(speed: Double) { rollerMotor.set(speed) }
 
+    fun getAmps(): Double { return rollerMotor.outputCurrent }
+
     fun stop() { rollerMotor.stopMotor() }
 
 }
