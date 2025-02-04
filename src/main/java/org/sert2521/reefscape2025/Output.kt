@@ -64,6 +64,12 @@ object Output : SubsystemBase() {
 
         values.add(Pair("Wrist Angle") { Wrist.getRadians() })
 
+        values.add(Pair("Dispenser Amps") { Dispenser.getAmps() })
+        values.add(Pair("Wrist Amps") { Wrist.getAmps() })
+        values.add(Pair("Wrist Roller Amps") { WristRollers.getAmps() })
+        // TODO: Uncomment this line when Elevator is merged
+        //values.add(Pair("Elevator Amps") { Elevator.getAmps() })
+
         bools.add(Pair("Beambreak") { Dispenser.getBeamBreak() })
 
         SmartDashboard.putData("Vision Field", visionField)
@@ -77,12 +83,11 @@ object Output : SubsystemBase() {
 
     fun update(){
         drivetrainAmps = Drivetrain.getAmps()
-        dispenserAmps = Wrist.getAmps()
+        dispenserAmps = Dispenser.getAmps()
         wristAmps = Wrist.getAmps()
         wristRollerAmps = WristRollers.getAmps()
-        elevatorAmps = 0.0  // TODO: Add Elevator.getAmps() when Elevator subsystem is merged
         totalAmps = drivetrainAmps[0].first + drivetrainAmps[1].first + drivetrainAmps[2].first + drivetrainAmps[3].first + drivetrainAmps[0].second + drivetrainAmps[1].second + drivetrainAmps[2].second + drivetrainAmps[3].second + dispenserAmps + wristAmps + wristRollerAmps + elevatorAmps
-
+        elevatorAmps = 0.0  // TODO: Add Elevator.getAmps() when Elevator subsystem is merged
 
         for (value in values) {
             SmartDashboard.putNumber("Output/${value.first}", value.second())
@@ -102,12 +107,7 @@ object Output : SubsystemBase() {
 
         field.robotPose = Drivetrain.getPose()
 
-        visionTargetPose.robotPose = Pose2d(Drivetrain.getVisionPose().translation, Drivetrain.getVisionPose())
-
-        if (!Vision.getEstimation().isEmpty){
-            visionEstimation.robotPose = Vision.getEstimation().get().estimatedPose.toPose2d()
-        }
-
+        visionTargetPose.robotPose = Pose2d(Drivetrain.getVisionPose().translation, Drivetrain.getVisionPose().rotation)
 
     }
 }

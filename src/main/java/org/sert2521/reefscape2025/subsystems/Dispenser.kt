@@ -31,6 +31,8 @@ object Dispenser: SubsystemBase() {
 
     fun setSpeed(speed:Double){ dispenserMotor.set(speed) }
 
+    fun getAmps(): Double { return dispenserMotor.outputCurrent }
+
     fun stop(){ dispenserMotor.stopMotor() }
 
 }
