@@ -7,7 +7,6 @@ import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DutyCycleEncoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import org.sert2521.reefscape2025.CurrentLimits
 import org.sert2521.reefscape2025.ElectronicIDs
 import org.sert2521.reefscape2025.PhysicalConstants
 import kotlin.math.PI
@@ -21,7 +20,7 @@ object Wrist: SubsystemBase() {
     init {
 
         config.inverted(false)
-        config.smartCurrentLimit(CurrentLimits.WRIST_CURRENT_LIMIT)
+        config.smartCurrentLimit(30)
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
 
         wristMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)

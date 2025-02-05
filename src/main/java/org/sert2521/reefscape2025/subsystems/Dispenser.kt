@@ -19,7 +19,7 @@ object Dispenser: SubsystemBase() {
     init{
 
         config.inverted(false)
-        config.smartCurrentLimit(CurrentLimits.DISPENSER_CURRENT_LIMIT)
+        config.smartCurrentLimit(30)
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 

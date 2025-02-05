@@ -17,7 +17,7 @@ object WristRollers: Subsystem {
     init {
 
         config.idleMode(SparkBaseConfig.IdleMode.kBrake)
-        config.smartCurrentLimit(CurrentLimits.WRIST_ROLLER_CURRENT_LIMIT)
+        config.smartCurrentLimit(30)
         config.inverted(false)
 
         rollerMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)

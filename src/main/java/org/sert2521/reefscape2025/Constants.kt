@@ -5,19 +5,7 @@ import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Units.Pounds
-import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
-
-object ConfigConstants { // Drivetrain configs are now in DrivetrainConstants
-
-    const val WRIST_STOW_SETPOINT = 0.0
-    const val WRIST_GROUND_SETPOINT = 0.0
-    const val WRIST_L1_SETPOINT = 0.0
-    const val WRIST_ALGAE_SETPOINT = 0.0
-
-}
-
-object PhysicalConstants {
 import edu.wpi.first.math.trajectory.TrapezoidProfile
 
 object ConfigConstants {
@@ -28,6 +16,11 @@ object ConfigConstants {
 
     const val HALF_SIDE_LENGTH = 0.0
     const val DRIVE_BASE_RADIUS = 0.0
+
+    const val WRIST_STOW_SETPOINT = 0.0
+    const val WRIST_GROUND_SETPOINT = 0.0
+    const val WRIST_L1_SETPOINT = 0.0
+    const val WRIST_ALGAE_SETPOINT = 0.0
 
     val robotMass = Pounds.of(115.0)
     val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
@@ -43,6 +36,10 @@ object ElectronicIDs {
     const val DISPENSER_MOTOR_ID = -1
     const val BEAMBREAK_ID = -1
 
+    const val ELEVATOR_MOTOR_ONE = -1
+    const val ELEVATOR_MOTOR_TWO = -1
+    const val TOF_SENSOR = -1
+
 }
 
 object TunedConstants {
@@ -55,13 +52,8 @@ object TunedConstants {
     const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be positive
     const val WRIST_ALGAE_INTAKE_SPEED = 0.0
     const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
-}
 
-object CurrentLimits {
-
-    const val WRIST_CURRENT_LIMIT = 30
-    const val WRIST_ROLLER_CURRENT_LIMIT = 30
-    const val DISPENSER_CURRENT_LIMIT = 30
+    val ELEVATOR_TRAPEZOIDAL_CONSTRAINTS = TrapezoidProfile.Constraints(0.0,0.0)
 
 }
 
@@ -75,6 +67,14 @@ object PIDFFConstants {
     const val WRIST_G = 0.0
     const val WRIST_V = 0.0
     const val WRIST_A = 0.0
+
+    const val ELEVATOR_P = 0.0
+    const val ELEVATOR_I = 0.0
+    const val ELEVATOR_D = 0.0
+
+    const val ELEVATOR_S = 0.0
+    const val ELEVATOR_V = 0.0
+    const val ELEVATOR_G = 0.0
 
 }
 
@@ -92,10 +92,10 @@ object DrivetrainConstants {
     const val TURN_SPEED = 0.0
 
     val swerveModuleData = listOf(
-        SwerveModuleData(Translation2d(HALF_SIDE_LENGTH, -HALF_SIDE_LENGTH), 5, 7, 16, -0.355-1.61-1.56+ PI /2, false), //Back Left
-        SwerveModuleData(Translation2d(-HALF_SIDE_LENGTH, -HALF_SIDE_LENGTH), 1, 2, 15, -0.138-1.57-1.54+ PI /2, false), //Back Right
-        SwerveModuleData(Translation2d(HALF_SIDE_LENGTH, HALF_SIDE_LENGTH), 16, 15, 14, 2.41-1.612-1.58+ PI /2, false), //Front Left
-        SwerveModuleData(Translation2d(-HALF_SIDE_LENGTH, HALF_SIDE_LENGTH), 3, 12, 13, 0.059-1.568-1.575+ PI /2, false) //Front Right
+        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 5, 7, 16, -0.355-1.61-1.56+ PI /2, false), //Back Left
+        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 1, 2, 15, -0.138-1.57-1.54+ PI /2, false), //Back Right
+        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 16, 15, 14, 2.41-1.612-1.58+ PI /2, false), //Front Left
+        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 3, 12, 13, 0.059-1.568-1.575+ PI /2, false) //Front Right
     )
 
     const val DRIVE_MOTOR_INVERTED = false
@@ -136,30 +136,9 @@ object DrivetrainConstants {
 
 // Creates a class for the swerve modules in the drivetrain
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
-}
 
 object PhysicalConstants {
 
-}
-
-object ElectronicIDs {
-    const val ELEVATOR_MOTOR_ONE = -1
-    const val ELEVATOR_MOTOR_TWO = -1
-    const val TOF_SENSOR = -1
-}
-
-object TunedConstants {
-    const val ELEVATOR_P = 0.0
-    const val ELEVATOR_I = 0.0
-    const val ELEVATOR_D = 0.0
-
-    const val ELEVATOR_S = 0.0
-    const val ELEVATOR_V = 0.0
-    const val ELEVATOR_G = 0.0
-
-    val ELEVATOR_TRAPEZOIDAL_CONSTRAINTS = TrapezoidProfile.Constraints(0.0,0.0)
-}
-
-object RuntimeConstants {
+    const val HALF_SIDE_LENGTH = 0.607
 
 }
