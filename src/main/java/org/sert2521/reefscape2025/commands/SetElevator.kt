@@ -3,20 +3,20 @@ package org.sert2521.reefscape2025.commands
 import edu.wpi.first.math.controller.ElevatorFeedforward
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.reefscape2025.TunedConstants
+import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.Elevator
 
 class SetElevator(private val setPoint: Double) : Command() {
     private val profilePID = ProfiledPIDController(
-        TunedConstants.ELEVATOR_P,
-        TunedConstants.ELEVATOR_I,
-        TunedConstants.ELEVATOR_D,
-        TunedConstants.ELEVATOR_TRAPEZOIDAL_CONSTRAINTS
+        PIDFFConstants.ELEVATOR_P,
+        PIDFFConstants.ELEVATOR_I,
+        PIDFFConstants.ELEVATOR_D,
+        PIDFFConstants.ELEVATOR_TRAPEZOIDAL_CONSTRAINTS
     )
     private val feedForward = ElevatorFeedforward(
-        TunedConstants.ELEVATOR_S,
-        TunedConstants.ELEVATOR_G,
-        TunedConstants.ELEVATOR_V,
+        PIDFFConstants.ELEVATOR_S,
+        PIDFFConstants.ELEVATOR_G,
+        PIDFFConstants.ELEVATOR_V,
     )
 
     init {

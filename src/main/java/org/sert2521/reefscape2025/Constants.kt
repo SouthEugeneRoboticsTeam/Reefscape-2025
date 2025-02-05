@@ -53,8 +53,6 @@ object TunedConstants {
     const val WRIST_ALGAE_INTAKE_SPEED = 0.0
     const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
 
-    val ELEVATOR_TRAPEZOIDAL_CONSTRAINTS = TrapezoidProfile.Constraints(0.0,0.0)
-
 }
 
 object PIDFFConstants {
@@ -75,6 +73,7 @@ object PIDFFConstants {
     const val ELEVATOR_S = 0.0
     const val ELEVATOR_V = 0.0
     const val ELEVATOR_G = 0.0
+    val ELEVATOR_TRAPEZOIDAL_CONSTRAINTS = TrapezoidProfile.Constraints(0.0,0.0)
 
 }
 

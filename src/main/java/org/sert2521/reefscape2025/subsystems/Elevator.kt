@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.sert2521.reefscape2025.ElectronicIDs
 
 object Elevator : SubsystemBase() {
-    private val motorOne = SparkMax(ElectronicIDs.elevatorMotorOne, SparkLowLevel.MotorType.kBrushless)
-    private val motorTwo = SparkMax(ElectronicIDs.elevatorMotorTwo, SparkLowLevel.MotorType.kBrushless)
+    private val motorOne = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_ONE, SparkLowLevel.MotorType.kBrushless)
+    private val motorTwo = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_TWO, SparkLowLevel.MotorType.kBrushless)
     private val motorOneConfig = SparkMaxConfig()
     private val motorTwoConfig = SparkMaxConfig()
-    private val CANRange = CoreCANrange(ElectronicIDs.TOFSensorID, "0")
+    private val CANRange = CoreCANrange(ElectronicIDs.TOF_SENSOR, "0")
     private val CANRangeConfigurator = CANRange.configurator
     private val CANRangeConfig = CANrangeConfiguration()
 
@@ -58,6 +58,10 @@ object Elevator : SubsystemBase() {
         CANRange.distance.refresh()
         val distance = CANRange.distance.value
         return distance.`in`(distance.unit())
+    }
+
+    fun getTotalAmps(): Double {
+        return motorOne.outputCurrent + motorTwo.outputCurrent
     }
 
     fun stopMotors() {

@@ -7,10 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.smartdashboard.Field2d
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.sert2521.reefscape2025.subsystems.Dispenser
-import org.sert2521.reefscape2025.subsystems.Drivetrain
-import org.sert2521.reefscape2025.subsystems.Wrist
-import org.sert2521.reefscape2025.subsystems.WristRollers
+import org.sert2521.reefscape2025.subsystems.*
 import java.io.File
 
 object Output : SubsystemBase() {
@@ -28,6 +25,7 @@ object Output : SubsystemBase() {
     private var wristRollerAmps: Double = 0.0
     private var elevatorAmps: Double = 0.0
     private var totalAmps: Double = 0.0
+    private var elevatorHeight: Double = 0.0
 
     init {
 
@@ -63,12 +61,12 @@ object Output : SubsystemBase() {
         values.add(Pair("Drive 4 Health") {Drivetrain.getHealth(3)})
 
         values.add(Pair("Wrist Angle") { Wrist.getRadians() })
+        values.add(Pair("Elevator Height") { Elevator.getDistance() })
 
         values.add(Pair("Dispenser Amps") { Dispenser.getAmps() })
         values.add(Pair("Wrist Amps") { Wrist.getAmps() })
         values.add(Pair("Wrist Roller Amps") { WristRollers.getAmps() })
-        // TODO: Uncomment this line when Elevator is merged
-        //values.add(Pair("Elevator Amps") { Elevator.getAmps() })
+        values.add(Pair("Elevator Amps") { Elevator.getTotalAmps() })
 
         bools.add(Pair("Beambreak") { Dispenser.getBeamBreak() })
 
@@ -79,6 +77,7 @@ object Output : SubsystemBase() {
         SmartDashboard.putData("Test Field", testField)
 
         update()
+
     }
 
     fun update(){
@@ -87,7 +86,8 @@ object Output : SubsystemBase() {
         wristAmps = Wrist.getAmps()
         wristRollerAmps = WristRollers.getAmps()
         totalAmps = drivetrainAmps[0].first + drivetrainAmps[1].first + drivetrainAmps[2].first + drivetrainAmps[3].first + drivetrainAmps[0].second + drivetrainAmps[1].second + drivetrainAmps[2].second + drivetrainAmps[3].second + dispenserAmps + wristAmps + wristRollerAmps + elevatorAmps
-        elevatorAmps = 0.0  // TODO: Add Elevator.getAmps() when Elevator subsystem is merged
+        elevatorAmps = Elevator.getTotalAmps()
+        elevatorHeight = Elevator.getDistance()
 
         for (value in values) {
             SmartDashboard.putNumber("Output/${value.first}", value.second())
@@ -98,7 +98,6 @@ object Output : SubsystemBase() {
         }
 
         testField.robotPose = Pose2d(Drivetrain.getPose().translation, Rotation2d(0.0))
-
 
         field.robotPose = Drivetrain.getPose()
 
