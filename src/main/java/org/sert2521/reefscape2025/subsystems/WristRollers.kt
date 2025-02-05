@@ -6,7 +6,6 @@ import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj2.command.Subsystem
-import org.sert2521.reefscape2025.CurrentLimits
 import org.sert2521.reefscape2025.ElectronicIDs
 
 object WristRollers: Subsystem {

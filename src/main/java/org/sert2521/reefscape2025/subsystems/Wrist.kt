@@ -7,6 +7,7 @@ import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DutyCycleEncoder
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.sert2521.reefscape2025.ConfigConstants
 import org.sert2521.reefscape2025.ElectronicIDs
 import org.sert2521.reefscape2025.PhysicalConstants
 import kotlin.math.PI
@@ -35,7 +36,7 @@ object Wrist: SubsystemBase() {
 
     fun getRadians():Double {
 
-        var wristAngle = (absEncoder.get())* PhysicalConstants.WRIST_ENCODER_MULTIPLIER + PhysicalConstants.WRIST_ENCODER_TRANSFORM
+        var wristAngle = (absEncoder.get())* ConfigConstants.WRIST_ENCODER_MULTIPLIER + ConfigConstants.WRIST_ENCODER_TRANSFORM
 
         if (wristAngle<-PI){
             wristAngle += 2* PI

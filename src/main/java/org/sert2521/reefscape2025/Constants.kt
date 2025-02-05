@@ -22,8 +22,10 @@ object ConfigConstants {
     const val WRIST_L1_SETPOINT = 0.0
     const val WRIST_ALGAE_SETPOINT = 0.0
 
-    val robotMass = Pounds.of(115.0)
-    val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
+    const val ELEVATOR_STOW_SETPOINT = 0.0
+    const val ELEVATOR_L2_SETPOINT = 0.0
+    const val ELEVATOR_L3_SETPOINT = 0.0
+    const val ELEVATOR_L4_SETPOINT = 0.0
 
 }
 
@@ -139,5 +141,7 @@ class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val a
 object PhysicalConstants {
 
     const val HALF_SIDE_LENGTH = 0.607
+    val robotMass = Pounds.of(115.0)
+    val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
 
 }

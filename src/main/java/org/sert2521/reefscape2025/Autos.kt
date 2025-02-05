@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import org.sert2521.reefscape2025.commands.*
 import org.sert2521.reefscape2025.subsystems.Drivetrain
+import org.sert2521.reefscape2025.subsystems.Elevator
 import org.sert2521.reefscape2025.subsystems.WristRollers
 import java.io.ObjectInputFilter.Config
 
@@ -40,10 +41,10 @@ object Autos {
         "Dispenser Intake" to DispenserIntake(),
         "Dispenser Outtake" to DispenserOuttake(),
 
-        "Elevator Stow" to Commands.none(),
-        "Elevator L2" to Commands.none(),
-        "Elevator L3" to Commands.none(),
-        "Elevator L4" to Commands.none()
+        "Elevator Stow" to SetElevator(ConfigConstants.ELEVATOR_STOW_SETPOINT),
+        "Elevator L2" to SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT),
+        "Elevator L3" to SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT),
+        "Elevator L4" to SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT)
 
     )
 
