@@ -18,6 +18,9 @@ object ConfigConstants { // Drivetrain configs are now in DrivetrainConstants
 }
 
 object PhysicalConstants {
+import edu.wpi.first.math.trajectory.TrapezoidProfile
+
+object ConfigConstants {
 
     const val WRIST_ENCODER_OFFSET = 0.0
     const val WRIST_ENCODER_MULTIPLIER = 0.0
@@ -133,3 +136,30 @@ object DrivetrainConstants {
 
 // Creates a class for the swerve modules in the drivetrain
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
+}
+
+object PhysicalConstants {
+
+}
+
+object ElectronicIDs {
+    const val ELEVATOR_MOTOR_ONE = -1
+    const val ELEVATOR_MOTOR_TWO = -1
+    const val TOF_SENSOR = -1
+}
+
+object TunedConstants {
+    const val ELEVATOR_P = 0.0
+    const val ELEVATOR_I = 0.0
+    const val ELEVATOR_D = 0.0
+
+    const val ELEVATOR_S = 0.0
+    const val ELEVATOR_V = 0.0
+    const val ELEVATOR_G = 0.0
+
+    val ELEVATOR_TRAPEZOIDAL_CONSTRAINTS = TrapezoidProfile.Constraints(0.0,0.0)
+}
+
+object RuntimeConstants {
+
+}
