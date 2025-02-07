@@ -1,51 +1,42 @@
 package org.sert2521.reefscape2025.commands
 
 import edu.wpi.first.math.controller.ElevatorFeedforward
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.Elevator
-/*
-hold elevator
-    same but not profiled
-    ff + pid
-    set setpoint at start
- */
-class SetElevator(private val setPoint: Double) : Command() {
-    private val profilePID = ProfiledPIDController(
+
+class HoldElevator : Command() {
+    private val pid = PIDController(
         PIDFFConstants.ELEVATOR_P,
         PIDFFConstants.ELEVATOR_I,
         PIDFFConstants.ELEVATOR_D,
-        PIDFFConstants.ELEVATOR_TRAPEZOIDAL_CONSTRAINTS
     )
     private val feedForward = ElevatorFeedforward(
         PIDFFConstants.ELEVATOR_S,
         PIDFFConstants.ELEVATOR_G,
         PIDFFConstants.ELEVATOR_V,
     )
+    private var setPoint = 0.0
 
     init {
         addRequirements(Elevator)
-        profilePID.setTolerance(0.05)
-        profilePID.setTolerance(0.05)
     }
 
     override fun initialize() {
-        profilePID.reset(Elevator.getDistance())
-        profilePID.setGoal(setPoint)
+        setPoint = Elevator.getDistance()
     }
 
     override fun execute() {
-        val pidOutput = profilePID.calculate(Elevator.getDistance())
-        val ffOutput = feedForward.calculate(profilePID.setpoint.velocity)
+        val pidOutput = pid.calculate(Elevator.getDistance())
+        val ffOutput = feedForward.calculate(0.0)
         Elevator.setVoltage(pidOutput + ffOutput)
     }
 
     override fun isFinished(): Boolean {
-        return profilePID.atGoal()
+        return false
     }
 
-    override fun end(interrupted: Boolean) {
-        Elevator.stopMotors()
-    }
+    override fun end(interrupted: Boolean) {}
 }
