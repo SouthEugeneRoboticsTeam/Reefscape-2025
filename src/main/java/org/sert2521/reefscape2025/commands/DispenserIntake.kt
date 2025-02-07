@@ -11,7 +11,7 @@ class DispenserIntake : Command() {
     init { addRequirements(Dispenser) }
 
     override fun initialize() {
-        if (Dispenser.getBeamBreak()) {
+        if (Dispenser.getDispenserBeamBreak()) {
             triggered = true
         }
         Dispenser.setSpeed(TunedConstants.DISPENSER_INTAKE_SPEED)
@@ -19,14 +19,14 @@ class DispenserIntake : Command() {
 
     override fun execute() {
 
-        if (!triggered && Dispenser.getBeamBreak()) {
+        if (!triggered && Dispenser.getDispenserBeamBreak()) {
             triggered = true
             Dispenser.setSpeed(TunedConstants.DISPENSER_INTAKE_SPEED)
         }
 
     }
 
-    override fun isFinished(): Boolean { return triggered && !Dispenser.getBeamBreak() }
+    override fun isFinished(): Boolean { return triggered && !Dispenser.getDispenserBeamBreak() }
 
     override fun end(interrupted: Boolean) { Dispenser.stop() }
 

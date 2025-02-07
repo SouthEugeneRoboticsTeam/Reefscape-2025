@@ -5,11 +5,11 @@ import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.WristRollers
 import org.sert2521.reefscape2025.subsystems.Wrist
 
-class WristIntakeCoral(): Command() {
+class WristOuttake(): Command() {
 
-    init { addRequirements(WristRollers, Wrist) }
+    init { addRequirements(WristRollers) }
 
-    override fun initialize() { WristRollers.setSpeed(TunedConstants.WRIST_CORAL_INTAKE_SPEED) }
+    override fun initialize() { WristRollers.setSpeed(-TunedConstants.WRIST_OUTTAKE_SPEED) }
 
     override fun execute() {}
 

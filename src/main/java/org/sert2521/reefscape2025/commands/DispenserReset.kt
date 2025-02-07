@@ -11,7 +11,7 @@ class DispenserReset : Command() {
     init { addRequirements(Dispenser) }
 
     override fun initialize() {
-        if (Dispenser.getBeamBreak()) {
+        if (Dispenser.getDispenserBeamBreak()) {
             triggered = true
             Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
         } else {
@@ -22,14 +22,14 @@ class DispenserReset : Command() {
 
     override fun execute() {
 
-        if (!triggered && Dispenser.getBeamBreak()) {
+        if (!triggered && Dispenser.getDispenserBeamBreak()) {
             triggered = true
             Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
         }
 
     }
 
-    override fun isFinished(): Boolean { return triggered && !Dispenser.getBeamBreak() }
+    override fun isFinished(): Boolean { return triggered && !Dispenser.getDispenserBeamBreak() }
 
     override fun end(interrupted: Boolean) { Dispenser.stop() }
 

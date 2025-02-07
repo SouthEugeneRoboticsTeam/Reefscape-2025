@@ -12,7 +12,8 @@ import org.sert2521.reefscape2025.ElectronicIDs
 
 object Dispenser: SubsystemBase() {
     private val dispenserMotor = SparkMax(ElectronicIDs.DISPENSER_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
-    private val beamBreakSensor = DigitalInput(ElectronicIDs.BEAMBREAK_ID)
+    private val dispenserBeambreak = DigitalInput(ElectronicIDs.DISPENSER_BEAMBREAK_ID)
+    private val rampBeambreak = DigitalInput(ElectronicIDs.RAMP_BEAMBREAK_ID)
     private val config = SparkMaxConfig()
 
     init{
@@ -26,7 +27,9 @@ object Dispenser: SubsystemBase() {
 
     }
 
-    fun getBeamBreak():Boolean{ return !beamBreakSensor.get() }
+    fun getDispenserBeamBreak():Boolean{ return !dispenserBeambreak.get() }
+
+    fun getRampBeamBreak(): Boolean{ return !rampBeambreak.get() }
 
     fun setSpeed(speed:Double){ dispenserMotor.set(speed) }
 

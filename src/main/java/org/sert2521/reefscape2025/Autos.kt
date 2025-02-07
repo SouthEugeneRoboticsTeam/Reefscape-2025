@@ -36,7 +36,7 @@ object Autos {
         "Wrist to Ground" to SetWrist(ConfigConstants.WRIST_GROUND_SETPOINT),
         "Stow Wrist" to SetWrist(ConfigConstants.WRIST_STOW_SETPOINT),
 
-        "L1 Outtake" to WristOuttakeCoral(),
+        "L1 Outtake" to WristIntake(),
 
         "Dispenser Intake" to DispenserIntake(),
         "Dispenser Outtake" to DispenserOuttake(),

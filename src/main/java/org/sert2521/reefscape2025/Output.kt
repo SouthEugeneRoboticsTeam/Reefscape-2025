@@ -68,7 +68,7 @@ object Output : SubsystemBase() {
         values.add(Pair("Wrist Roller Amps") { WristRollers.getAmps() })
         values.add(Pair("Elevator Amps") { Elevator.getTotalAmps() })
 
-        bools.add(Pair("Beambreak") { Dispenser.getBeamBreak() })
+        bools.add(Pair("Beambreak") { Dispenser.getDispenserBeamBreak() })
 
         SmartDashboard.putData("Vision Field", visionField)
         SmartDashboard.putData("Vision Pose Target", visionTargetPose)

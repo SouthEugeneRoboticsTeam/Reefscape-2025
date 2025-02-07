@@ -35,7 +35,8 @@ object ElectronicIDs {
     const val WRIST_ROLLER_ID = 17
 
     const val DISPENSER_MOTOR_ID = 15
-    const val BEAMBREAK_ID = 1
+    const val DISPENSER_BEAMBREAK_ID = 1
+    const val RAMP_BEAMBREAK_ID = 2
 
     const val ELEVATOR_MOTOR_LEFT = 13
     const val ELEVATOR_MOTOR_RIGHT = 14
@@ -49,10 +50,8 @@ object TunedConstants {
     const val DISPENSER_RESET_SPEED = 0.0
     const val DISPENSER_OUTTAKE_SPEED = 0.0
 
-    const val WRIST_CORAL_INTAKE_SPEED = 0.0
-    const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be positive
-    const val WRIST_ALGAE_INTAKE_SPEED = 0.0
-    const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
+    const val WRIST_OUTTAKE_SPEED = 0.0
+    const val WRIST_INTAKE_SPEED = 0.0
 
 }
 
