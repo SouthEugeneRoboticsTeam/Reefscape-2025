@@ -8,6 +8,7 @@ import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.Elevator
 
 class HoldElevator : Command() {
+
     private val pid = PIDController(
         PIDFFConstants.ELEVATOR_P,
         PIDFFConstants.ELEVATOR_I,
@@ -18,25 +19,22 @@ class HoldElevator : Command() {
         PIDFFConstants.ELEVATOR_G,
         PIDFFConstants.ELEVATOR_V,
     )
+
     private var setPoint = 0.0
 
-    init {
-        addRequirements(Elevator)
-    }
+    init { addRequirements(Elevator) }
 
-    override fun initialize() {
-        setPoint = Elevator.getDistance()
-    }
+    override fun initialize() { setPoint = Elevator.getDistance() }
 
     override fun execute() {
+
         val pidOutput = pid.calculate(Elevator.getDistance())
         val ffOutput = feedForward.calculate(0.0)
         Elevator.setVoltage(pidOutput + ffOutput)
+
     }
 
-    override fun isFinished(): Boolean {
-        return false
-    }
+    override fun isFinished(): Boolean { return false }
 
     override fun end(interrupted: Boolean) {}
 }
