@@ -32,14 +32,14 @@ object ConfigConstants {
 object ElectronicIDs {
 
     const val WRIST_ENCODER_ID = -1
-    const val WRIST_MOTOR_ID = -1
-    const val GROUND_INTAKE_ROLLER_ID = -1
+    const val WRIST_MOTOR_ID = 16
+    const val WRIST_ROLLER_ID = 17
 
-    const val DISPENSER_MOTOR_ID = -1
+    const val DISPENSER_MOTOR_ID = 15
     const val BEAMBREAK_ID = -1
 
-    const val ELEVATOR_MOTOR_ONE = -1
-    const val ELEVATOR_MOTOR_TWO = -1
+    const val ELEVATOR_MOTOR_ONE = -1 // 13 or 14
+    const val ELEVATOR_MOTOR_TWO = -1 // 13 or 14
     const val TOF_SENSOR = -1
 
 }
@@ -93,10 +93,10 @@ object DrivetrainConstants {
     const val TURN_SPEED = 0.0
 
     val swerveModuleData = listOf(
-        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 5, 7, 16, -0.355-1.61-1.56+ PI /2, false), //Back Left
-        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 1, 2, 15, -0.138-1.57-1.54+ PI /2, false), //Back Right
-        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 16, 15, 14, 2.41-1.612-1.58+ PI /2, false), //Front Left
-        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 3, 12, 13, 0.059-1.568-1.575+ PI /2, false) //Front Right
+        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 7, 11, 4, -0.355-1.61-1.56+ PI /2, false), //Back Left
+        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, -PhysicalConstants.HALF_SIDE_LENGTH), 8, 12, 3, -0.138-1.57-1.54+ PI /2, false), //Back Right
+        SwerveModuleData(Translation2d(PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 5, 9, 1, 2.41-1.612-1.58+ PI /2, false), //Front Left
+        SwerveModuleData(Translation2d(-PhysicalConstants.HALF_SIDE_LENGTH, PhysicalConstants.HALF_SIDE_LENGTH), 6, 10, 2, 0.059-1.568-1.575+ PI /2, false) //Front Right
     )
 
     const val DRIVE_MOTOR_INVERTED = false
