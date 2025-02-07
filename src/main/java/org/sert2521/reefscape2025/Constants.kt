@@ -38,8 +38,8 @@ object ElectronicIDs {
     const val DISPENSER_MOTOR_ID = 15
     const val BEAMBREAK_ID = -1
 
-    const val ELEVATOR_MOTOR_ONE = -1 // 13 or 14
-    const val ELEVATOR_MOTOR_TWO = -1 // 13 or 14
+    const val ELEVATOR_MOTOR_LEFT = 13 // 13 or 14
+    const val ELEVATOR_MOTOR_RIGHT = 14 // 13 or 14
     const val TOF_SENSOR = -1
 
 }

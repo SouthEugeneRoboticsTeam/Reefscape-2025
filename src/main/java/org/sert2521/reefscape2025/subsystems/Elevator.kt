@@ -8,14 +8,15 @@ import com.revrobotics.spark.SparkLowLevel
 import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
+import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.sert2521.reefscape2025.ElectronicIDs
 
 object Elevator : SubsystemBase() {
-    private val motorOne = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_ONE, SparkLowLevel.MotorType.kBrushless)
-    private val motorTwo = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_TWO, SparkLowLevel.MotorType.kBrushless)
-    private val motorOneConfig = SparkMaxConfig()
-    private val motorTwoConfig = SparkMaxConfig()
+    private val motorLeft = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_LEFT, SparkLowLevel.MotorType.kBrushless)
+    private val motorRight = SparkMax(ElectronicIDs.ELEVATOR_MOTOR_RIGHT, SparkLowLevel.MotorType.kBrushless)
+    private val motorLeftConfig = SparkMaxConfig()
+    private val motorRightConfig = SparkMaxConfig()
     private val CANRange = CoreCANrange(ElectronicIDs.TOF_SENSOR, "0")
     private val CANRangeConfigurator = CANRange.configurator
     private val CANRangeConfig = CANrangeConfiguration()
@@ -23,26 +24,26 @@ object Elevator : SubsystemBase() {
     init {
         CANRangeConfig.FovParams.FOVRangeX = 6.75
         CANRangeConfig.FovParams.FOVRangeY = 6.75
-        CANRangeConfig.ProximityParams.ProximityThreshold = 0.05
-        CANRangeConfig.ProximityParams.ProximityHysteresis = 0.005
+        CANRangeConfig.ProximityParams.ProximityThreshold = 0.0
 
         CANRangeConfigurator.apply(CANRangeConfig)
 
-        motorTwoConfig.inverted(false)
+        motorRightConfig.smartCurrentLimit(40)
+            .idleMode(SparkBaseConfig.IdleMode.kBrake)
+
+        motorLeftConfig.inverted(false)
             .smartCurrentLimit(40)
             .idleMode(SparkBaseConfig.IdleMode.kBrake)
 
-        motorOneConfig.inverted(false)
-            .smartCurrentLimit(40)
-            .idleMode(SparkBaseConfig.IdleMode.kBrake)
+        motorRightConfig.follow(motorLeft, true)
 
-        motorOne.configure(
-            motorOneConfig,
+        motorLeft.configure(
+            motorLeftConfig,
             SparkBase.ResetMode.kResetSafeParameters,
             SparkBase.PersistMode.kPersistParameters
         )
-        motorTwo.configure(
-            motorTwoConfig,
+        motorRight.configure(
+            motorRightConfig,
             SparkBase.ResetMode.kResetSafeParameters,
             SparkBase.PersistMode.kPersistParameters
         )
@@ -50,22 +51,20 @@ object Elevator : SubsystemBase() {
 
 
     fun setVoltage(voltage: Double) {
-        motorOne.setVoltage(voltage)
-        motorTwo.setVoltage(voltage)
+        motorLeft.setVoltage(voltage)
     }
 
     fun getDistance(): Double {
         CANRange.distance.refresh()
         val distance = CANRange.distance.value
-        return distance.`in`(distance.unit())
+        return distance.`in`(Units.Meters)
     }
 
     fun getTotalAmps(): Double {
-        return motorOne.outputCurrent + motorTwo.outputCurrent
+        return motorLeft.outputCurrent + motorRight.outputCurrent
     }
 
     fun stopMotors() {
-        motorTwo.stopMotor()
-        motorOne.stopMotor()
+        motorLeft.stopMotor()
     }
 }

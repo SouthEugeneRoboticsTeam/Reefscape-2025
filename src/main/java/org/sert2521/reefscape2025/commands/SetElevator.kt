@@ -5,7 +5,12 @@ import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.Elevator
-
+/*
+hold elevator
+    same but not profiled
+    ff + pid
+    set setpoint at start
+ */
 class SetElevator(private val setPoint: Double) : Command() {
     private val profilePID = ProfiledPIDController(
         PIDFFConstants.ELEVATOR_P,
@@ -20,21 +25,22 @@ class SetElevator(private val setPoint: Double) : Command() {
     )
 
     init {
-        // each subsystem used by the command must be passed into the addRequirements() method
         addRequirements(Elevator)
     }
 
     override fun initialize() {
+        profilePID.reset(Elevator.getDistance())
         profilePID.setGoal(setPoint)
     }
 
     override fun execute() {
-        val pidVal = profilePID.calculate(Elevator.getDistance())
-        Elevator.setVoltage(pidVal + feedForward.calculate(profilePID.setpoint.velocity))
+        val pidOutput = profilePID.calculate(Elevator.getDistance())
+        val ffOutput = feedForward.calculate(profilePID.setpoint.velocity)
+        Elevator.setVoltage(pidOutput + ffOutput)
     }
 
     override fun isFinished(): Boolean {
-        return profilePID.atSetpoint()
+        return profilePID.atGoal()
     }
 
     override fun end(interrupted: Boolean) {
