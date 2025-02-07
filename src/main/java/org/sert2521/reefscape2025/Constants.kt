@@ -10,12 +10,11 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile
 
 object ConfigConstants {
 
-    const val WRIST_ENCODER_OFFSET = 0.0
-    const val WRIST_ENCODER_MULTIPLIER = 0.0
+    const val WRIST_ENCODER_MULTIPLIER = (2 *PI) / 1
     const val WRIST_ENCODER_TRANSFORM = 0.0
 
-    const val HALF_SIDE_LENGTH = 0.0
-    const val DRIVE_BASE_RADIUS = 0.0
+    const val HALF_SIDE_LENGTH = 0.5773 / 2.0
+    const val DRIVE_BASE_RADIUS = 0.4082
 
     const val WRIST_STOW_SETPOINT = 0.0
     const val WRIST_GROUND_SETPOINT = 0.0
@@ -31,16 +30,16 @@ object ConfigConstants {
 
 object ElectronicIDs {
 
-    const val WRIST_ENCODER_ID = -1
+    const val WRIST_ENCODER_ID = 18
     const val WRIST_MOTOR_ID = 16
     const val WRIST_ROLLER_ID = 17
 
     const val DISPENSER_MOTOR_ID = 15
-    const val BEAMBREAK_ID = -1
+    const val BEAMBREAK_ID = 1
 
-    const val ELEVATOR_MOTOR_LEFT = 13 // 13 or 14
-    const val ELEVATOR_MOTOR_RIGHT = 14 // 13 or 14
-    const val TOF_SENSOR = -1
+    const val ELEVATOR_MOTOR_LEFT = 13
+    const val ELEVATOR_MOTOR_RIGHT = 14
+    const val TOF_SENSOR = 18
 
 }
 
