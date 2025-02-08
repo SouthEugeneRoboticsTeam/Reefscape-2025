@@ -28,9 +28,9 @@ object Autos {
 
     private var commandList = mapOf<String, Command>(
 
-        "Wrist to L1" to SetWrist(ConfigConstants.WRIST_L1_SETPOINT),
-        "Wrist to Ground" to SetWrist(ConfigConstants.WRIST_GROUND_SETPOINT),
-        "Stow Wrist" to SetWrist(ConfigConstants.WRIST_STOW_SETPOINT),
+        "Wrist to L1" to SetWrist(TunedConstants.WRIST_L1_SETPOINT),
+        "Wrist to Ground" to SetWrist(TunedConstants.WRIST_GROUND_SETPOINT),
+        "Stow Wrist" to SetWrist(TunedConstants.WRIST_STOW_SETPOINT),
 
         "L1 Outtake" to WristOuttakeCoral(),
 

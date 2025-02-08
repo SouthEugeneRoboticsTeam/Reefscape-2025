@@ -11,14 +11,6 @@ import edu.wpi.first.units.Units.Pounds
 import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
 
-object ConfigConstants { // Drivetrain configs are now in DrivetrainConstants
-
-    const val WRIST_STOW_SETPOINT = 0.0
-    const val WRIST_GROUND_SETPOINT = 0.0
-    const val WRIST_L1_SETPOINT = 0.0
-    const val WRIST_ALGAE_SETPOINT = 0.0
-
-}
 
 object PhysicalConstants {
 
@@ -55,6 +47,12 @@ object TunedConstants {
     const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be positive
     const val WRIST_ALGAE_INTAKE_SPEED = 0.0
     const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
+
+    const val WRIST_STOW_SETPOINT = 0.0
+    const val WRIST_GROUND_SETPOINT = 0.0
+    const val WRIST_L1_SETPOINT = 0.0
+    const val WRIST_ALGAE_SETPOINT = 0.0
+
 }
 
 object CurrentLimits {
