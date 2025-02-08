@@ -3,6 +3,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.DrivetrainConstants
 import org.sert2521.reefscape2025.subsystems.Drivetrain
+import org.sert2521.reefscape2025.subsystems.LEDsToWowTheCrow
 import kotlin.math.*
 
 class VisionAlign(): Command() {
@@ -26,7 +27,10 @@ class VisionAlign(): Command() {
     private var yResult = 0.0
     private var angleResult = 0.0
 
-    init{ addRequirements(Drivetrain)}
+    private var ledPercent = 0.0
+    private var errorStart = 0.0
+
+    init{ addRequirements(Drivetrain, LEDsToWowTheCrow)}
 
     override fun initialize() {
 
@@ -34,9 +38,14 @@ class VisionAlign(): Command() {
         yTarget = Drivetrain.getNearestTarget().y
         angleTarget = Drivetrain.getNearestTarget().rotation.radians
 
+        errorStart = sqrt( xError.pow(2) + yError.pow(2) )
+
     }
 
     override fun execute() {
+
+        ledPercent = (error / errorStart) * 100
+        LEDsToWowTheCrow.setAll(LEDsToWowTheCrow.ledCurveCalculate(ledPercent))
 
         xError = xTarget - Drivetrain.getVisionPose().x
         yError = yTarget - Drivetrain.getVisionPose().y

@@ -190,3 +190,10 @@ object VisionTargetPositions {
         )
 
 }
+
+object LEDConstants {
+
+    const val LED_ID = 0
+    const val LED_LENGTH = 40
+
+}

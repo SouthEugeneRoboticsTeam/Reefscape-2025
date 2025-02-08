@@ -7,13 +7,13 @@ import org.sert2521.reefscape2025.subsystems.Dispenser
 class DispenserIdle : Command() {
 
     private val dispenser = Dispenser
+    var automaticIntake = true
 
     init { addRequirements(dispenser) }
 
     override fun initialize() {}
 
     override fun execute() {
-
         if (Dispenser.getRampBeamBreak() || Dispenser.getDispenserBeamBreak()) {
             Dispenser.setSpeed(TunedConstants.DISPENSER_INTAKE_SPEED)
         } else {
