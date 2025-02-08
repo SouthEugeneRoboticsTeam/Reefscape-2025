@@ -63,4 +63,8 @@ class VisionAlign(): Command() {
         Drivetrain.drive(ChassisSpeeds(xResult, yResult, angleResult))
 
     }
+
+    override fun end(interrupted: Boolean) {
+        LEDsToWowTheCrow.off()
+    }
 }

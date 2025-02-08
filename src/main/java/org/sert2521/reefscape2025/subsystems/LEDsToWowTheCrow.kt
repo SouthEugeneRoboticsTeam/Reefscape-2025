@@ -31,7 +31,7 @@ object LEDsToWowTheCrow : SubsystemBase() {
 
     }
 
-    fun off() { ledStrip.stop() }
+    fun off() { setAll(Color(0,0,0)) }
 
     override fun periodic() {
         ledStrip.setData(buffer)
