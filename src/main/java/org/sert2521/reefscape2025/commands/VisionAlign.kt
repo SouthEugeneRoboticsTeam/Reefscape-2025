@@ -1,61 +1,57 @@
-import edu.wpi.first.hal.simulation.EncoderDataJNI
-import edu.wpi.first.math.MathUtil
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.DrivetrainConstants
-import org.sert2521.reefscape2025.Input
-import org.sert2521.reefscape2025.libraries.LimelightHelpers
 import org.sert2521.reefscape2025.subsystems.Drivetrain
+import kotlin.math.*
 
 class VisionAlign(): Command() {
 
-    init{ addRequirements(Drivetrain) }
+    private val drivePID = PIDController(DrivetrainConstants.DRIVE_P, DrivetrainConstants.DRIVE_I, DrivetrainConstants.DRIVE_D)
+    private val anglePID = PIDController(DrivetrainConstants.ANGLE_P, DrivetrainConstants.ANGLE_I, DrivetrainConstants.ANGLE_D)
 
-    fun limelightAimProportional(): Double {
+    private var xTarget = 0.0
+    private var yTarget = 0.0
 
-        val kP = DrivetrainConstants.VISION_AIM_P
+    private var xError = 0.0
+    private var yError = 0.0
+    private var angleError = 0.0
+    private var error = 0.0
 
-        var targetingAngularVelocity = LimelightHelpers.getTX("limelight") * kP
+    private var angleTarget = 0.0
 
-        targetingAngularVelocity *= DrivetrainConstants.MAX_ANGULAR_SPEED
+    private var angle = 0.0
+    private var pidResult = 0.0
+    private var xResult = 0.0
+    private var yResult = 0.0
+    private var angleResult = 0.0
 
-        targetingAngularVelocity *= -1.0
+    init{ addRequirements(Drivetrain)}
 
-        return targetingAngularVelocity
+    override fun initialize() {
+
+        xTarget = Drivetrain.getNearestTarget().x
+        yTarget = Drivetrain.getNearestTarget().y
+        angleTarget = Drivetrain.getNearestTarget().rotation.radians
 
     }
 
-    fun limelightRangeProportional(): Double {
+    override fun execute() {
 
-        val kP = DrivetrainConstants.VISION_RANGE_P
-        var targetingForwardSpeed = LimelightHelpers.getTY("limelight") * kP
-        targetingForwardSpeed *= DrivetrainConstants.MAX_ANGULAR_SPEED
-        targetingForwardSpeed *= -1.0
-        return targetingForwardSpeed
+        xError = xTarget - Drivetrain.getVisionPose().x
+        yError = yTarget - Drivetrain.getVisionPose().y
+        angleError = angleTarget - Drivetrain.getVisionPose().rotation.radians
+
+        angle = atan2(yError, xError)
+        error = sqrt( xError.pow(2) + yError.pow(2) )
+
+        pidResult = drivePID.calculate(error, 0.0)
+        angleResult = anglePID.calculate(Drivetrain.getVisionPose().rotation.radians, angleTarget)
+
+        xResult = pidResult * cos(angle)
+        yResult = pidResult * sin(angle)
+
+        Drivetrain.drive(ChassisSpeeds(xResult, yResult, angleResult))
 
     }
-
-    private fun drive(fieldRelative: Boolean) {
-
-        var fieldRelative = fieldRelative
-
-        var xSpeed: Double = (DrivetrainConstants.VISION_X_SPEED_LIMIT.calculate(MathUtil.applyDeadband(Input.getLeftJoystickY(), 0.02)) * DrivetrainConstants.MAX_ANGULAR_SPEED)
-        val ySpeed: Double = (DrivetrainConstants.VISION_Y_SPEED_LIMIT.calculate(MathUtil.applyDeadband(Input.getLeftJoystickX(), 0.02)) * DrivetrainConstants.MAX_ANGULAR_SPEED)
-        var rot: Double = (DrivetrainConstants.VISION_ROT_SPEED_LIMIT.calculate(MathUtil.applyDeadband(Input.getRightJoystickX(), 0.02)) * DrivetrainConstants.MAX_ROT_SPEED)
-
-        // while the A-button is pressed, overwrite some of the driving values with the output of our limelight methods
-        if (Input.getAButton()) {
-            val limelightRot = limelightAimProportional()
-            rot = limelightRot
-
-            val limelightForward = limelightRangeProportional()
-            xSpeed = limelightForward
-
-            //while using Limelight, turn off field-relative driving.
-            fieldRelative = false
-        }
-
-        Drivetrain.drive(ChassisSpeeds( xSpeed, ySpeed, rot))
-    }
-
 }

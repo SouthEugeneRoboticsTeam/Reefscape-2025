@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.DrivetrainConstants
 import org.sert2521.reefscape2025.SwerveModuleData
+import org.sert2521.reefscape2025.VisionTargetPositions
 import org.sert2521.reefscape2025.commands.JoystickDrive
 import org.sert2521.reefscape2025.libraries.LimelightHelpers
 import kotlin.math.*
@@ -339,6 +340,8 @@ object Drivetrain : SubsystemBase() {
         )
 
     }
+
+    fun getNearestTarget(): Pose2d { return getVisionPose().nearest(VisionTargetPositions.reefPositions) }
 
     fun stop() {
 
