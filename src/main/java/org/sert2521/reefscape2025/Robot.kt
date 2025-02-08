@@ -39,6 +39,7 @@ object Robot : TimedRobot()
 
         Autos
         Input
+        Output
     }
 
 

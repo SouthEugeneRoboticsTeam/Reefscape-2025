@@ -67,7 +67,8 @@ object Autos {
                     DrivetrainConstants.driveMotorGearbox,
                     DrivetrainConstants.DRIVE_AUTO_CURRENT_LIMIT.toDouble(),
                     1
-                )
+                ),
+                *DrivetrainConstants.moduleTranslations
             ),
             {false}
         )

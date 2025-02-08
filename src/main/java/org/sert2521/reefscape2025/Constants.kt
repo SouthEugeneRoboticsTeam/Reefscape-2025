@@ -166,6 +166,13 @@ object DrivetrainConstants {
     const val VISION_POSITION_I = 0.0
     const val VISION_POSITION_D = 0.0
 
+    val moduleTranslations = arrayOf(
+        Translation2d(11.35, 11.35),
+        Translation2d(11.35, -11.35),
+        Translation2d(-11.35, 11.35),
+        Translation2d(-11.35, -11.35)
+    )
+
 }
 
 // Creates a class for the swerve modules in the drivetrain

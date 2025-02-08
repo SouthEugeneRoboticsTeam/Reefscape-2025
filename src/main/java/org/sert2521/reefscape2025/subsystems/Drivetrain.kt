@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import com.studica.frc.AHRS
 import edu.wpi.first.math.VecBuilder
+import edu.wpi.first.math.estimator.PoseEstimator
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
@@ -278,6 +279,10 @@ object Drivetrain : SubsystemBase() {
 
     }
 
+    fun getModuleAngle(index: Int): Double { return modules[index].getAngle().radians }
+
+    fun getModuleVelocity(index: Int): Double { return modules[index].state.speedMetersPerSecond }
+
     fun getTilt(): Double { return atan(sqrt(tan(Units.degreesToRadians(imu.pitch.toDouble())).pow(2) + tan(Units.degreesToRadians(imu.roll.toDouble())).pow(2))) }
 
     fun getRoll(): Double { return Units.degreesToRadians(imu.roll.toDouble()) }
@@ -325,19 +330,31 @@ object Drivetrain : SubsystemBase() {
 
     fun visionEstimate() {
 
-        // First, tell Limelight your robot's current orientation
-        val robotYaw = getYaw()
-        LimelightHelpers.SetRobotOrientation("", robotYaw, 0.0, 0.0, 0.0, 0.0, 0.0)
-
-        // Get the pose estimate
-        val limelightMeasurement: LimelightHelpers.PoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue("")
-
-        // Add it to your pose estimator
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999999.0))
-        poseEstimator.addVisionMeasurement(
-            limelightMeasurement.pose,
-            limelightMeasurement.timestampSeconds
+        var doRejectUpdate = false
+        LimelightHelpers.SetRobotOrientation(
+            "limelight",
+            poseEstimator.getEstimatedPosition().getRotation().getDegrees(),
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
         )
+        val mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight")
+        if (Math.abs(imu.getRate()) > 720)  // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+        {
+            doRejectUpdate = true
+        }
+        if (mt2.tagCount == 0) {
+            doRejectUpdate = true
+        }
+        if (!doRejectUpdate) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, 9999999.0))
+            poseEstimator.addVisionMeasurement(
+                mt2.pose,
+                mt2.timestampSeconds
+            )
+        }
 
     }
 

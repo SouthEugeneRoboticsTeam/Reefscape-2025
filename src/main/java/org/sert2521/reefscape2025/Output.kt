@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.subsystems.*
 import java.io.File
 
+
 object Output : SubsystemBase() {
     private val values = mutableListOf<Pair<String, () -> Double>>()
     private val bools = mutableListOf<Pair<String, () -> Boolean>>()
@@ -68,13 +69,30 @@ object Output : SubsystemBase() {
         values.add(Pair("Wrist Roller Amps") { WristRollers.getAmps() })
         values.add(Pair("Elevator Amps") { Elevator.getTotalAmps() })
 
-        bools.add(Pair("Beambreak") { Dispenser.getDispenserBeamBreak() })
+        bools.add(Pair("Dispenser Beambreak") { Dispenser.getDispenserBeamBreak() })
+        bools.add(Pair("Ramp Beambreak") { Dispenser.getRampBeamBreak() })
 
         SmartDashboard.putData("Vision Field", visionField)
         SmartDashboard.putData("Vision Pose Target", visionTargetPose)
         SmartDashboard.putData("Field", field)
         SmartDashboard.putData("Vision Estimation", visionEstimation)
         SmartDashboard.putData("Test Field", testField)
+
+        SmartDashboard.putData("Swerve Drive") { builder ->
+            builder.setSmartDashboardType("SwerveDrive")
+            builder.addDoubleProperty("Front Left Angle", { Drivetrain.getModuleAngle(0) }, null)
+            builder.addDoubleProperty("Front Left Velocity", { Drivetrain.getModuleVelocity(0) }, null)
+
+            builder.addDoubleProperty("Front Right Angle", { Drivetrain.getModuleAngle(1) }, null)
+            builder.addDoubleProperty("Front Right Velocity", { Drivetrain.getModuleVelocity(1) }, null)
+
+            builder.addDoubleProperty("Back Left Angle", { Drivetrain.getModuleVelocity(2) }, null)
+            builder.addDoubleProperty("Back Left Velocity", { Drivetrain.getModuleVelocity(2) }, null)
+
+            builder.addDoubleProperty("Back Right Angle", { Drivetrain.getModuleVelocity(3) }, null)
+            builder.addDoubleProperty("Back Right Velocity", { Drivetrain.getModuleVelocity(3)}, null)
+            builder.addDoubleProperty("Robot Angle", { Drivetrain.getPose().rotation.radians}, null)
+        }
 
         update()
 
@@ -101,12 +119,15 @@ object Output : SubsystemBase() {
 
         field.robotPose = Drivetrain.getPose()
 
-
         visionField.robotPose = Drivetrain.getVisionPose()
 
         field.robotPose = Drivetrain.getPose()
 
         visionTargetPose.robotPose = Pose2d(Drivetrain.getVisionPose().translation, Drivetrain.getVisionPose().rotation)
 
+    }
+
+    override fun periodic() {
+        update()
     }
 }
