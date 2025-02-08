@@ -31,19 +31,19 @@ object Autos {
 
     private var commandList = mapOf<String, Command>(
 
-        "Wrist to L1" to SetWrist(ConfigConstants.WRIST_L1_SETPOINT),
-        "Wrist to Ground" to SetWrist(ConfigConstants.WRIST_GROUND_SETPOINT),
-        "Stow Wrist" to SetWrist(ConfigConstants.WRIST_STOW_SETPOINT),
+        "Wrist to L1" to SetWrist(TunedConstants.WRIST_L1_SETPOINT),
+        "Wrist to Ground" to SetWrist(TunedConstants.WRIST_GROUND_SETPOINT),
+        "Stow Wrist" to SetWrist(TunedConstants.WRIST_STOW_SETPOINT),
 
         "L1 Outtake" to WristIntake(),
 
         "Dispenser Intake" to DispenserIntake(),
         "Dispenser Outtake" to DispenserOuttake(),
 
-        "Elevator Stow" to SetElevator(ConfigConstants.ELEVATOR_STOW_SETPOINT),
-        "Elevator L2" to SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT),
-        "Elevator L3" to SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT),
-        "Elevator L4" to SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT)
+        "Elevator Stow" to SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT),
+        "Elevator L2" to SetElevator(TunedConstants.ELEVATOR_L2_SETPOINT),
+        "Elevator L3" to SetElevator(TunedConstants.ELEVATOR_L3_SETPOINT),
+        "Elevator L4" to SetElevator(TunedConstants.ELEVATOR_L4_SETPOINT)
 
     )
 
@@ -62,7 +62,7 @@ object Autos {
                 PhysicalConstants.momentOfInertia,
                 ModuleConfig(
                     DrivetrainConstants.WHEEL_RADIUS_METERS,
-                    DrivetrainConstants.MAX_SPEED_MPS,
+                    DrivetrainConstants.MAX_ANGULAR_SPEED,
                     DrivetrainConstants.WHEEL_COF,
                     DrivetrainConstants.driveMotorGearbox,
                     DrivetrainConstants.DRIVE_AUTO_CURRENT_LIMIT.toDouble(),

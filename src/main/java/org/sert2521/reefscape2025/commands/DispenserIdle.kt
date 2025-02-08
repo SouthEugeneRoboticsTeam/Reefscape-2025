@@ -1,8 +1,6 @@
 package org.sert2521.reefscape2025.commands
 
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.reefscape2025.ConfigConstants
-import org.sert2521.reefscape2025.RuntimeConstants
 import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.Dispenser
 

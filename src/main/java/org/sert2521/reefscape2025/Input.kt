@@ -1,5 +1,6 @@
 package org.sert2521.reefscape2025
 
+import VisionAlign
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.GenericHID
@@ -39,7 +40,7 @@ import org.sert2521.reefscape2025.subsystems.Elevator
         // Reset Drivetrain -> Y
         // Wrist Outtake -> Left Bumper (LB)
         // Dispenser (Manipulator) Outtake -> Right Bumper (RB)
-
+        // Vision Align -> X
 
 object Input {
     private val driverController = CommandXboxController(0)
@@ -49,6 +50,7 @@ object Input {
     // Button Assignment:
         // Drivetrain:
         private val resetDrivetrain = driverController.y()
+        private val visionAlign = driverController.x()
 
         // Wrist:
         private val wristGround = JoystickButton(gunnerController, 12)
@@ -83,12 +85,13 @@ object Input {
         // Command Assignment
             // Drivetrain
                 resetDrivetrain.onTrue(runOnce({ Drivetrain.setNewPose(Pose2d()) }))
+                visionAlign.whileTrue(VisionAlign())
 
             // Wrist
-                wristStow.onTrue(SetWrist(ConfigConstants.WRIST_STOW_SETPOINT))
-                wristL1.onTrue(SetWrist(ConfigConstants.WRIST_L1_SETPOINT))
-                wristAlgae.onTrue(SetWrist(ConfigConstants.WRIST_ALGAE_SETPOINT))
-                wristGround.onTrue(SetWrist(ConfigConstants.WRIST_GROUND_SETPOINT))
+                wristStow.onTrue(SetWrist(TunedConstants.WRIST_STOW_SETPOINT))
+                wristL1.onTrue(SetWrist(TunedConstants.WRIST_L1_SETPOINT))
+                wristAlgae.onTrue(SetWrist(TunedConstants.WRIST_ALGAE_SETPOINT))
+                wristGround.onTrue(SetWrist(TunedConstants.WRIST_GROUND_SETPOINT))
 
             // Wrist Rollers
                 wristRollerIntake.whileTrue(WristIntake())
@@ -96,10 +99,10 @@ object Input {
                 wristRollerOuttakeGunner.whileTrue(WristOuttake())
 
             // Elevator
-                elevatorStow.onTrue(SetElevator(ConfigConstants.ELEVATOR_STOW_SETPOINT))
-                elevatorL2.onTrue(SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
-                elevatorL3.onTrue(SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
-                elevatorL4.onTrue(SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                elevatorStow.onTrue(SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT))
+                elevatorL2.onTrue(SetElevator(TunedConstants.ELEVATOR_L2_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                elevatorL3.onTrue(SetElevator(TunedConstants.ELEVATOR_L3_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                elevatorL4.onTrue(SetElevator(TunedConstants.ELEVATOR_L4_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
                 toggleElevatorSafe.onTrue(runOnce({Elevator.toggleSafeMode()}))
 
             // Dispenser

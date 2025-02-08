@@ -62,23 +62,16 @@ object TunedConstants {
 
     const val WRIST_OUTTAKE_SPEED = 0.0
     const val WRIST_INTAKE_SPEED = 0.0
-    const val WRIST_CORAL_INTAKE_SPEED = 0.0
-    const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be positive
-    const val WRIST_ALGAE_INTAKE_SPEED = 0.0
-    const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
 
     const val WRIST_STOW_SETPOINT = 0.0
     const val WRIST_GROUND_SETPOINT = 0.0
     const val WRIST_L1_SETPOINT = 0.0
     const val WRIST_ALGAE_SETPOINT = 0.0
 
-}
-
-object CurrentLimits {
-
-    const val WRIST_CURRENT_LIMIT = 30
-    const val WRIST_ROLLER_CURRENT_LIMIT = 30
-    const val DISPENSER_CURRENT_LIMIT = 30
+    const val ELEVATOR_STOW_SETPOINT = 0.0
+    const val ELEVATOR_L2_SETPOINT = 0.0
+    const val ELEVATOR_L3_SETPOINT = 0.0
+    const val ELEVATOR_L4_SETPOINT = 0.0
 
 }
 

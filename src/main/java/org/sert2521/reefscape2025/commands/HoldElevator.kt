@@ -2,7 +2,6 @@ package org.sert2521.reefscape2025.commands
 
 import edu.wpi.first.math.controller.ElevatorFeedforward
 import edu.wpi.first.math.controller.PIDController
-import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.PIDFFConstants
 import org.sert2521.reefscape2025.subsystems.Elevator
