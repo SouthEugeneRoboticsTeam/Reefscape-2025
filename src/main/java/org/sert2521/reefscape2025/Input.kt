@@ -76,7 +76,7 @@ object Input {
         private val dispenserOuttake = driverController.rightBumper()
         private val dispenserReset = JoystickButton(gunnerController, 8)
 
-    private val rumble = Trigger { DispenserIntake().isFinished }
+    private val rumble = Trigger { DispenserManualIntake().isFinished }
 
     init {
 
@@ -106,7 +106,7 @@ object Input {
                 toggleElevatorSafe.onTrue(runOnce({Elevator.toggleSafeMode()}))
 
             // Dispenser
-                dispenserManualIntake.onTrue(DispenserIntake())
+                dispenserManualIntake.onTrue(DispenserManualIntake())
                 dispenserOuttake.whileTrue(DispenserOuttake())
                 dispenserReset.onTrue(DispenserReset())
                 toggleAutomaticIntake.onTrue(runOnce({Dispenser.changeIntakeMode()}))

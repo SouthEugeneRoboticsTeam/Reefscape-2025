@@ -9,9 +9,6 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import org.sert2521.reefscape2025.commands.*
 import org.sert2521.reefscape2025.subsystems.Drivetrain
-import org.sert2521.reefscape2025.subsystems.Elevator
-import org.sert2521.reefscape2025.subsystems.WristRollers
-import java.io.ObjectInputFilter.Config
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -37,7 +34,7 @@ object Autos {
 
         "L1 Outtake" to WristIntake(),
 
-        "Dispenser Intake" to DispenserIntake(),
+        "Dispenser Intake" to DispenserManualIntake(),
         "Dispenser Outtake" to DispenserOuttake(),
 
         "Elevator Stow" to SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT),
