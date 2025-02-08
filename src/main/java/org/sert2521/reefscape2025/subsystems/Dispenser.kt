@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.ElectronicIDs
+import org.sert2521.reefscape2025.commands.DispenserIdle
 
 
 object Dispenser: SubsystemBase() {
@@ -15,6 +16,7 @@ object Dispenser: SubsystemBase() {
     private val dispenserBeambreak = DigitalInput(ElectronicIDs.DISPENSER_BEAMBREAK_ID)
     private val rampBeambreak = DigitalInput(ElectronicIDs.RAMP_BEAMBREAK_ID)
     private val config = SparkMaxConfig()
+    var dispenserAutoIntake = true
 
     init{
 
@@ -24,6 +26,8 @@ object Dispenser: SubsystemBase() {
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
         dispenserMotor.configure(config, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+
+        defaultCommand = DispenserIdle()
 
     }
 
@@ -36,5 +40,20 @@ object Dispenser: SubsystemBase() {
     fun getAmps(): Double { return dispenserMotor.outputCurrent }
 
     fun stop(){ dispenserMotor.stopMotor() }
+
+    fun changeIntakeMode(){
+
+        if(dispenserAutoIntake){
+            defaultCommand = DispenserIdle()
+            dispenserAutoIntake = true
+        }else{
+            defaultCommand = run({stop()})
+            dispenserAutoIntake = false
+        }
+    }
+
+    fun startAutomaticIntake(){
+        defaultCommand = DispenserIdle()
+    }
 
 }

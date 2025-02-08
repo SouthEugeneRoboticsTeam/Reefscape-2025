@@ -5,8 +5,10 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.GenericHID
 import edu.wpi.first.wpilibj.Joystick
 import edu.wpi.first.wpilibj.XboxController
+import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.WaitCommand
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.sert2521.reefscape2025.commands.*
@@ -29,22 +31,24 @@ import org.sert2521.reefscape2025.subsystems.Drivetrain
         // Right Hand:
             // Wrist Algae -> Top Left [13]
             // Wrist Ground -> Top Middle [12]
+            // Elevator Intake -> ??
+            // Stop Automatic Intaking -> Bottom Left [14]
     // Driver:
         // Drive -> Left Stick
         // Turn -> Right Stick L-R
-        // Reset Drivetrain -> 2-square "view" button [8]
-        // Wrist Outtake -> B [2]
+        // Reset Drivetrain -> Y [?]
+        // Wrist Outtake -> Left Bumper (LB) [?]
         // Dispenser (Manipulator) Outtake -> Right Bumper (RB) [6]
 
 
 object Input {
-    private val driverController = XboxController(0)
+    private val driverController = CommandXboxController(0)
     private val gunnerController = Joystick(1)
 
 
     // Button Assignment:
         // Drivetrain:
-        private val resetDrivetrain = JoystickButton(driverController, 8)
+        private val resetDrivetrain = driverController.y()
 
         // Wrist:
         private val wristGround = JoystickButton(gunnerController, 12)
@@ -54,7 +58,7 @@ object Input {
 
         // Wrist Rollers:
         private val wristRollerIntake = JoystickButton(gunnerController, 1)
-        private val wristRollerOuttakeDriver = JoystickButton(driverController, 2)
+        private val wristRollerOuttakeDriver = driverController.leftBumper()
         private val wristRollerOuttakeGunner = JoystickButton(gunnerController, 2)
 
         // Elevator:
@@ -64,8 +68,9 @@ object Input {
         private val elevatorL4 = JoystickButton(gunnerController, 5)
 
         // Dispenser:
-        private val dispenserIntake = Trigger{ Dispenser.getRampBeamBreak() } // Intake when ramp beambreak is triggered
-        private val dispenserOuttake = JoystickButton(driverController, 6)
+        private val dispenserIntake = Trigger{ Dispenser.getRampBeamBreak() } // Intake when ramp beambreak is triggered // Maybe not needed?
+        private val disableAutomaticIntake = JoystickButton(gunnerController, 14)
+        private val dispenserOuttake = driverController.rightBumper()
         private val dispenserReset = JoystickButton(gunnerController, 8)
 
     private val rumble = Trigger { DispenserIntake().isFinished }
@@ -91,14 +96,15 @@ object Input {
 
             // Elevator
                 elevatorStow.onTrue(SetElevator(ConfigConstants.ELEVATOR_STOW_SETPOINT))
-                elevatorL2.onTrue(SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT))
-                elevatorL3.onTrue(SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT))
-                elevatorL4.onTrue(SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT))
+                elevatorL2.onTrue(SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
+                elevatorL3.onTrue(SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
+                elevatorL4.onTrue(SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
 
             // Dispenser
                 dispenserIntake.onTrue(DispenserIntake())
                 dispenserOuttake.whileTrue(DispenserOuttake())
                 dispenserReset.onTrue(DispenserReset()) // May need to be dispenserReset.whileTrue(DispenserIntake())
+                disableAutomaticIntake.onTrue(runOnce({Dispenser.changeIntakeMode()}))
 
     }
 
