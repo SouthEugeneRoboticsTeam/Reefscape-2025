@@ -11,9 +11,9 @@ import kotlin.math.*
 
 class JoystickDrive(private val fieldOriented: Boolean = true): Command() {
 
-    val joystickX = Input::getJoystickX
-    val joystickY = Input::getJoystickY
-    val joystickZ = Input::getJoystickZ
+    val joystickX = Input::getLeftJoystickX
+    val joystickY = Input::getLeftJoystickY
+    val joystickZ = Input::getRightJoystickX
     val inputRotOffset = Input::getRotOffset
 
     init {

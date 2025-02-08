@@ -4,7 +4,6 @@ import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.config.ModuleConfig
 import com.pathplanner.lib.config.RobotConfig
 import com.pathplanner.lib.controllers.PPHolonomicDriveController
-import edu.wpi.first.math.controller.HolonomicDriveController
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands

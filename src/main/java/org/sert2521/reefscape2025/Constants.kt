@@ -1,17 +1,28 @@
 package org.sert2521.reefscape2025
 
 import com.pathplanner.lib.config.PIDConstants
+import edu.wpi.first.math.filter.SlewRateLimiter
+import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.system.plant.DCMotor
+import edu.wpi.first.math.trajectory.TrapezoidProfile
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Units.Pounds
+import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
-import edu.wpi.first.math.trajectory.TrapezoidProfile
 
-object ConfigConstants {
 
-    const val WRIST_ENCODER_MULTIPLIER = (2 *PI) / 1
+
+object PhysicalConstants {
+
+    const val WRIST_ENCODER_OFFSET = 0.0
+    const val WRIST_ENCODER_MULTIPLIER = 0.0
     const val WRIST_ENCODER_TRANSFORM = 0.0
+
+    val robotMass = Pounds.of(115.0)
+    val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
+
 
     const val HALF_SIDE_LENGTH = 0.5773 / 2.0
     const val DRIVE_BASE_RADIUS = 0.4082
@@ -25,7 +36,6 @@ object ConfigConstants {
     const val ELEVATOR_L2_SETPOINT = 0.0
     const val ELEVATOR_L3_SETPOINT = 0.0
     const val ELEVATOR_L4_SETPOINT = 0.0
-
 }
 
 object ElectronicIDs {
@@ -52,6 +62,23 @@ object TunedConstants {
 
     const val WRIST_OUTTAKE_SPEED = 0.0
     const val WRIST_INTAKE_SPEED = 0.0
+    const val WRIST_CORAL_INTAKE_SPEED = 0.0
+    const val WRIST_CORAL_OUTTAKE_SPEED = 0.0 //Should be positive
+    const val WRIST_ALGAE_INTAKE_SPEED = 0.0
+    const val WRIST_ALGAE_OUTTAKE_SPEED = 0.0 //Should be positive
+
+    const val WRIST_STOW_SETPOINT = 0.0
+    const val WRIST_GROUND_SETPOINT = 0.0
+    const val WRIST_L1_SETPOINT = 0.0
+    const val WRIST_ALGAE_SETPOINT = 0.0
+
+}
+
+object CurrentLimits {
+
+    const val WRIST_CURRENT_LIMIT = 30
+    const val WRIST_ROLLER_CURRENT_LIMIT = 30
+    const val DISPENSER_CURRENT_LIMIT = 30
 
 }
 
@@ -125,21 +152,41 @@ object DrivetrainConstants {
     const val WHEEL_COF = 1.54
     const val WHEEL_RADIUS_METERS = 0.0508
 
-    const val MAX_SPEED_MPS  = 4.571
+    const val MAX_ANGULAR_SPEED  = 4.571
+    const val MAX_ROT_SPEED = 0.0 // TODO: Change this
 
     val driveMotorGearbox = DCMotor.getNEO(1).withReduction(6.75)
 
     const val DRIVE_AUTO_CURRENT_LIMIT = 0
+
+    const val VISION_RANGE_P = 0.0
+
+    val VISION_X_SPEED_LIMIT = SlewRateLimiter(3.0)
+    val VISION_Y_SPEED_LIMIT = SlewRateLimiter(3.0)
+    val VISION_ROT_SPEED_LIMIT = SlewRateLimiter(3.0)
+
+    const val VISION_ANGLE_P = 0.0
+    const val VISION_ANGLE_I = 0.0
+    const val VISION_ANGLE_D = 0.0
+
+    const val VISION_POSITION_P = 0.0
+    const val VISION_POSITION_I = 0.0
+    const val VISION_POSITION_D = 0.0
 
 }
 
 // Creates a class for the swerve modules in the drivetrain
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
 
-object PhysicalConstants {
+object VisionTargetPositions {
 
-    const val HALF_SIDE_LENGTH = 0.607
-    val robotMass = Pounds.of(115.0)
-    val momentOfInertia = Units.KilogramSquareMeters.of(0.0)
+    val reefPositions = mutableListOf(
+        Pose2d(3.2, 4.19, Rotation2d(0.0)), Pose2d(3.2, 3.86, Rotation2d(0.0)),
+        Pose2d(3.7, 2.99, Rotation2d(PI/3)), Pose2d(3.99, 2.83, Rotation2d(PI/3)),
+        Pose2d(4.99, 2.83, Rotation2d((2.0*PI)/3.0)), Pose2d(5.28, 2.98, Rotation2d((2.0*PI)/3.0)),
+        Pose2d(5.78, 3.86, Rotation2d(PI)), Pose2d(5.78, 4.19, Rotation2d(PI)),
+        Pose2d(5.28, 5.07, Rotation2d((-2.0*PI)/3.0)), Pose2d(4.99, 5.23, Rotation2d((-2.0*PI)/3.0)),
+        Pose2d(3.99, 5.23, Rotation2d(-PI/3.0)), Pose2d(3.70, 5.07, Rotation2d(-PI/3.0)),
+        )
 
 }

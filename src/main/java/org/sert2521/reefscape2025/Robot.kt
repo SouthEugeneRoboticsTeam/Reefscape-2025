@@ -3,10 +3,16 @@ package org.sert2521.reefscape2025
 import edu.wpi.first.hal.FRCNetComm.tInstances
 import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.HAL
+import edu.wpi.first.hal.simulation.EncoderDataJNI
+import edu.wpi.first.math.MathUtil
+import edu.wpi.first.math.filter.SlewRateLimiter
 import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.util.WPILibVersion
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
+import org.sert2521.reefscape2025.libraries.LimelightHelpers
+import org.sert2521.reefscape2025.subsystems.Drivetrain
+
 
 /**
  * The functions in this object (which basically functions as a singleton class) are called automatically
@@ -23,6 +29,9 @@ object Robot : TimedRobot()
 
     private var autonomousCommand: Command? = null
 
+    private val m_xspeedLimiter = DrivetrainConstants.VISION_X_SPEED_LIMIT
+    private val m_yspeedLimiter = DrivetrainConstants.VISION_Y_SPEED_LIMIT
+    private val m_rotLimiter = DrivetrainConstants.VISION_ROT_SPEED_LIMIT
 
     init
     {
