@@ -4,8 +4,6 @@ import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.GenericHID
 import edu.wpi.first.wpilibj.Joystick
-import edu.wpi.first.wpilibj.XboxController
-import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.Commands.runOnce
 import edu.wpi.first.wpilibj2.command.WaitCommand
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
@@ -14,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger
 import org.sert2521.reefscape2025.commands.*
 import org.sert2521.reefscape2025.subsystems.Dispenser
 import org.sert2521.reefscape2025.subsystems.Drivetrain
+import org.sert2521.reefscape2025.subsystems.Elevator
 
 // Bindings:
     // Gunner:
@@ -31,14 +30,15 @@ import org.sert2521.reefscape2025.subsystems.Drivetrain
         // Right Hand:
             // Wrist Algae -> Top Left [13]
             // Wrist Ground -> Top Middle [12]
-            // Elevator Intake -> ??
-            // Stop Automatic Intaking -> Bottom Left [14]
+            // Dispenser (Manipulator) Intake -> Top Right [11]
+            // Toggle Automatic Intaking -> Bottom Left [14]
+            // Toggle Elevator Safe Mode -> Bottom Middle [15]
     // Driver:
         // Drive -> Left Stick
-        // Turn -> Right Stick L-R
-        // Reset Drivetrain -> Y [?]
-        // Wrist Outtake -> Left Bumper (LB) [?]
-        // Dispenser (Manipulator) Outtake -> Right Bumper (RB) [6]
+        // Turn -> Right Stick
+        // Reset Drivetrain -> Y
+        // Wrist Outtake -> Left Bumper (LB)
+        // Dispenser (Manipulator) Outtake -> Right Bumper (RB)
 
 
 object Input {
@@ -66,10 +66,11 @@ object Input {
         private val elevatorL2 = JoystickButton(gunnerController, 7)
         private val elevatorL3 = JoystickButton(gunnerController, 6)
         private val elevatorL4 = JoystickButton(gunnerController, 5)
+        private val toggleElevatorSafe = JoystickButton(gunnerController, 15)
 
         // Dispenser:
-        private val dispenserIntake = Trigger{ Dispenser.getRampBeamBreak() } // Intake when ramp beambreak is triggered // Maybe not needed?
-        private val disableAutomaticIntake = JoystickButton(gunnerController, 14)
+        private val toggleAutomaticIntake = JoystickButton(gunnerController, 14)
+        private val dispenserManualIntake = JoystickButton(gunnerController, 11)
         private val dispenserOuttake = driverController.rightBumper()
         private val dispenserReset = JoystickButton(gunnerController, 8)
 
@@ -96,15 +97,16 @@ object Input {
 
             // Elevator
                 elevatorStow.onTrue(SetElevator(ConfigConstants.ELEVATOR_STOW_SETPOINT))
-                elevatorL2.onTrue(SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
-                elevatorL3.onTrue(SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
-                elevatorL4.onTrue(SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak()}))
+                elevatorL2.onTrue(SetElevator(ConfigConstants.ELEVATOR_L2_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                elevatorL3.onTrue(SetElevator(ConfigConstants.ELEVATOR_L3_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                elevatorL4.onTrue(SetElevator(ConfigConstants.ELEVATOR_L4_SETPOINT).onlyWhile({!Dispenser.getRampBeamBreak() && !Dispenser.getDispenserBeamBreak() || !Elevator.safeMode}))
+                toggleElevatorSafe.onTrue(runOnce({Elevator.toggleSafeMode()}))
 
             // Dispenser
-                dispenserIntake.onTrue(DispenserIntake())
+                dispenserManualIntake.onTrue(DispenserIntake())
                 dispenserOuttake.whileTrue(DispenserOuttake())
-                dispenserReset.onTrue(DispenserReset()) // May need to be dispenserReset.whileTrue(DispenserIntake())
-                disableAutomaticIntake.onTrue(runOnce({Dispenser.changeIntakeMode()}))
+                dispenserReset.onTrue(DispenserReset())
+                toggleAutomaticIntake.onTrue(runOnce({Dispenser.changeIntakeMode()}))
 
     }
 
@@ -118,5 +120,5 @@ object Input {
 
     fun getRotOffset(): Rotation2d { return rotationOffset }
 
-    private fun setRumble(amount: Double) { driverController.setRumble(GenericHID.RumbleType.kBothRumble, amount) }
+    fun setRumble(amount: Double) { driverController.setRumble(GenericHID.RumbleType.kBothRumble, amount) }
 }

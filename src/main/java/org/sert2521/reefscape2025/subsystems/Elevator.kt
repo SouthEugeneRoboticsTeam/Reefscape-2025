@@ -22,6 +22,7 @@ object Elevator : SubsystemBase() {
     private val CANRange = CoreCANrange(ElectronicIDs.TOF_SENSOR, "0")
     private val CANRangeConfigurator = CANRange.configurator
     private val CANRangeConfig = CANrangeConfiguration()
+    var safeMode = true
 
     init {
         CANRangeConfig.FovParams.FOVRangeX = 6.75
@@ -70,5 +71,9 @@ object Elevator : SubsystemBase() {
 
     fun stopMotors() {
         motorLeft.stopMotor()
+    }
+
+    fun toggleSafeMode(){
+        safeMode = !safeMode
     }
 }
