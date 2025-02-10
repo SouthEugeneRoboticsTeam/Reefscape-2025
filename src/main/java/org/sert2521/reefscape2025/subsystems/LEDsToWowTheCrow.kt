@@ -25,9 +25,16 @@ object LEDsToWowTheCrow : SubsystemBase() {
 
     fun ledCurveCalculate(percent: Double):  Color{
 
-        val red = (((-255.0/(100.0.pow(2))) * percent) + 255).pow(2)
-        val green = (255.0/(100.0.pow(2)) * percent).pow(2)
-        return Color(red, green, 0.0)
+        return Color(
+            -(0.0255) * percent.pow(2) + 255,
+            (0.0255) * percent.pow(2),
+            0.0
+        )
+
+        //Curves for Miku colors (If robot is named Miku):
+        //Red:    r = (-.0241) * percent.pow(2) + 255
+        //Green:  g =  (.0234) * percent.pow(2)
+        //Blue:   b =  (.0223) * percent.po2(2)
 
     }
 
