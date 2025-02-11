@@ -79,12 +79,6 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Dispenser Intake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "Elevator L4"
                       }
                     }
@@ -131,12 +125,6 @@
                       "type": "named",
                       "data": {
                         "name": "Elevator Stow"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Dispenser Intake"
                       }
                     },
                     {

@@ -28,19 +28,19 @@ object Autos {
 
     private var commandList = mapOf<String, Command>(
 
-        "Wrist to L1" to SetWrist(TunedConstants.WRIST_L1_SETPOINT),
-        "Wrist to Ground" to SetWrist(TunedConstants.WRIST_GROUND_SETPOINT),
-        "Stow Wrist" to SetWrist(TunedConstants.WRIST_STOW_SETPOINT),
+        "Wrist to L1" to SetWrist(TunedConstants.WRIST_L1_SETPOINT).asProxy(),
+        "Wrist to Ground" to SetWrist(TunedConstants.WRIST_GROUND_SETPOINT).asProxy(),
+        "Stow Wrist" to SetWrist(TunedConstants.WRIST_STOW_SETPOINT).asProxy(),
 
-        "L1 Outtake" to WristIntake(),
+        "L1 Outtake" to WristOuttake().asProxy(),
 
-        "Dispenser Intake" to DispenserManualIntake(),
-        "Dispenser Outtake" to DispenserOuttake(),
+        "Dispenser Intake" to DispenserManualIntake().asProxy(),
+        "Dispenser Outtake" to DispenserOuttake().asProxy(),
 
-        "Elevator Stow" to SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT),
-        "Elevator L2" to SetElevator(TunedConstants.ELEVATOR_L2_SETPOINT),
-        "Elevator L3" to SetElevator(TunedConstants.ELEVATOR_L3_SETPOINT),
-        "Elevator L4" to SetElevator(TunedConstants.ELEVATOR_L4_SETPOINT)
+        "Elevator Stow" to SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT).asProxy(),
+        "Elevator L2" to SetElevator(TunedConstants.ELEVATOR_L2_SETPOINT).asProxy(),
+        "Elevator L3" to SetElevator(TunedConstants.ELEVATOR_L3_SETPOINT).asProxy(),
+        "Elevator L4" to SetElevator(TunedConstants.ELEVATOR_L4_SETPOINT).asProxy()
 
     )
 

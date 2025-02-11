@@ -36,12 +36,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Dispenser Intake"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -73,12 +67,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Dispenser Intake"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -100,7 +88,7 @@
         {
           "type": "named",
           "data": {
-            "name": "L1 Outtake"
+            "name": "Dispenser Outtake"
           }
         }
       ]
