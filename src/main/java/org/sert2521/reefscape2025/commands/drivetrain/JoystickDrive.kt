@@ -1,4 +1,4 @@
-package org.sert2521.reefscape2025.commands
+package org.sert2521.reefscape2025.commands.drivetrain
 
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.kinematics.ChassisSpeeds

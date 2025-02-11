@@ -8,7 +8,6 @@ import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
 import com.studica.frc.AHRS
 import edu.wpi.first.math.VecBuilder
-import edu.wpi.first.math.estimator.PoseEstimator
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
@@ -21,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.DrivetrainConstants
 import org.sert2521.reefscape2025.SwerveModuleData
 import org.sert2521.reefscape2025.VisionTargetPositions
-import org.sert2521.reefscape2025.commands.JoystickDrive
+import org.sert2521.reefscape2025.commands.drivetrain.JoystickDrive
 import org.sert2521.reefscape2025.libraries.LimelightHelpers
 import kotlin.math.*
 

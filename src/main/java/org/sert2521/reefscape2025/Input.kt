@@ -1,6 +1,6 @@
 package org.sert2521.reefscape2025
 
-import VisionAlign
+import org.sert2521.reefscape2025.commands.drivetrain.VisionAlign
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.GenericHID
@@ -10,7 +10,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import edu.wpi.first.wpilibj2.command.button.JoystickButton
 import edu.wpi.first.wpilibj2.command.button.Trigger
-import org.sert2521.reefscape2025.commands.*
+import org.sert2521.reefscape2025.commands.dispenser.DispenserManualIntake
+import org.sert2521.reefscape2025.commands.dispenser.DispenserOuttake
+import org.sert2521.reefscape2025.commands.dispenser.DispenserReset
+import org.sert2521.reefscape2025.commands.elevator.SetElevator
+import org.sert2521.reefscape2025.commands.wrist.SetWrist
+import org.sert2521.reefscape2025.commands.wristrollers.WristIntake
+import org.sert2521.reefscape2025.commands.wristrollers.WristOuttake
 import org.sert2521.reefscape2025.subsystems.Dispenser
 import org.sert2521.reefscape2025.subsystems.Drivetrain
 import org.sert2521.reefscape2025.subsystems.Elevator
