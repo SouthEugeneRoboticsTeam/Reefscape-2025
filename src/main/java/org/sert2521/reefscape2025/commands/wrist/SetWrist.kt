@@ -1,4 +1,4 @@
-package org.sert2521.reefscape2025.commands
+package org.sert2521.reefscape2025.commands.wrist
 
 import edu.wpi.first.math.controller.ArmFeedforward
 import edu.wpi.first.math.controller.PIDController

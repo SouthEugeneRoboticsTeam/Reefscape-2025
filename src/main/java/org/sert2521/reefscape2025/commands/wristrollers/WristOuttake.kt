@@ -1,14 +1,14 @@
-package org.sert2521.reefscape2025.commands
+package org.sert2521.reefscape2025.commands.wristrollers
 
 import edu.wpi.first.wpilibj2.command.Command
 import org.sert2521.reefscape2025.TunedConstants
 import org.sert2521.reefscape2025.subsystems.WristRollers
 
-class WristIntake(): Command() {
+class WristOuttake(): Command() {
 
     init { addRequirements(WristRollers) }
 
-    override fun initialize() { WristRollers.setSpeed(TunedConstants.WRIST_INTAKE_SPEED) }
+    override fun initialize() { WristRollers.setSpeed(-TunedConstants.WRIST_OUTTAKE_SPEED) }
 
     override fun execute() {}
 

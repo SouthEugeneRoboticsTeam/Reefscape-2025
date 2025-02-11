@@ -7,7 +7,11 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import org.sert2521.reefscape2025.commands.*
+import org.sert2521.reefscape2025.commands.dispenser.DispenserManualIntake
+import org.sert2521.reefscape2025.commands.dispenser.DispenserOuttake
+import org.sert2521.reefscape2025.commands.elevator.SetElevator
+import org.sert2521.reefscape2025.commands.wrist.SetWrist
+import org.sert2521.reefscape2025.commands.wristrollers.WristIntake
 import org.sert2521.reefscape2025.subsystems.Drivetrain
 
 /**

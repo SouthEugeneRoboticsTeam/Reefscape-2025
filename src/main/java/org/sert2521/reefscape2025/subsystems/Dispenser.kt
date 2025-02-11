@@ -8,7 +8,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.sert2521.reefscape2025.ElectronicIDs
-import org.sert2521.reefscape2025.commands.DispenserIdle
+import org.sert2521.reefscape2025.commands.dispenser.DispenserIdle
 
 
 object Dispenser: SubsystemBase() {
