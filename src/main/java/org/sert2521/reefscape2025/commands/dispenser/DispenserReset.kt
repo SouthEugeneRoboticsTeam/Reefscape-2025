@@ -1,7 +1,7 @@
 package org.sert2521.reefscape2025.commands.dispenser
 
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.reefscape2025.TunedConstants
+import org.sert2521.reefscape2025.SetpointConstants
 import org.sert2521.reefscape2025.subsystems.Dispenser
 
 class DispenserReset : Command() {
@@ -13,9 +13,9 @@ class DispenserReset : Command() {
     override fun initialize() {
         if (Dispenser.getDispenserBeamBreak()) {
             triggered = true
-            Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
+            Dispenser.setSpeed(SetpointConstants.DISPENSER_RESET_SPEED)
         } else {
-            Dispenser.setSpeed(-TunedConstants.DISPENSER_RESET_SPEED)
+            Dispenser.setSpeed(-SetpointConstants.DISPENSER_RESET_SPEED)
         }
 
     }
@@ -24,7 +24,7 @@ class DispenserReset : Command() {
 
         if (!triggered && Dispenser.getDispenserBeamBreak()) {
             triggered = true
-            Dispenser.setSpeed(TunedConstants.DISPENSER_RESET_SPEED)
+            Dispenser.setSpeed(SetpointConstants.DISPENSER_RESET_SPEED)
         }
 
     }

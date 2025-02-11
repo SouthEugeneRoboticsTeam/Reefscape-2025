@@ -1,7 +1,7 @@
 package org.sert2521.reefscape2025.commands.dispenser
 
 import edu.wpi.first.wpilibj2.command.Command
-import org.sert2521.reefscape2025.TunedConstants
+import org.sert2521.reefscape2025.SetpointConstants
 import org.sert2521.reefscape2025.subsystems.Dispenser
 
 class DispenserIdle : Command() {
@@ -15,7 +15,7 @@ class DispenserIdle : Command() {
     override fun execute() {
 
         if (Dispenser.getRampBeamBreak() || Dispenser.getDispenserBeamBreak()) {
-            Dispenser.setSpeed(TunedConstants.DISPENSER_INTAKE_SPEED)
+            Dispenser.setSpeed(SetpointConstants.DISPENSER_INTAKE_SPEED)
         } else {
             Dispenser.stop()
         }

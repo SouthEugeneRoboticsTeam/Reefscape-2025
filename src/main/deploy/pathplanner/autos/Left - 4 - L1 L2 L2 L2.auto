@@ -1,0 +1,164 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.0"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Wrist to L1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L1 Outtake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.1"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Dispenser Outtake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Stow"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Dispenser Outtake"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator Stow"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left - 4 - L1 L2  L2 L2.6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Elevator L2"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Dispenser Outtake"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": true
+}

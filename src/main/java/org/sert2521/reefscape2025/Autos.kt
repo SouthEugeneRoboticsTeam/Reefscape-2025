@@ -11,8 +11,7 @@ import org.sert2521.reefscape2025.commands.dispenser.DispenserManualIntake
 import org.sert2521.reefscape2025.commands.dispenser.DispenserOuttake
 import org.sert2521.reefscape2025.commands.elevator.SetElevator
 import org.sert2521.reefscape2025.commands.wrist.SetWrist
-import org.sert2521.reefscape2025.commands.wristrollers.WristIntake
-import org.sert2521.reefscape2025.commands.wristrollers.WristOuttake
+import org.sert2521.reefscape2025.commands.ground_intake.GroundOuttake
 import org.sert2521.reefscape2025.subsystems.Drivetrain
 
 /**
@@ -33,19 +32,19 @@ object Autos {
 
     private var commandList = mapOf<String, Command>(
 
-        "Wrist to L1" to SetWrist(TunedConstants.WRIST_L1_SETPOINT).asProxy(),
-        "Wrist to Ground" to SetWrist(TunedConstants.WRIST_GROUND_SETPOINT).asProxy(),
-        "Stow Wrist" to SetWrist(TunedConstants.WRIST_STOW_SETPOINT).asProxy(),
+        "Wrist to L1" to SetWrist(SetpointConstants.WRIST_L1).asProxy(),
+        "Wrist to Ground" to SetWrist(SetpointConstants.WRIST_GROUND).asProxy(),
+        "Stow Wrist" to SetWrist(SetpointConstants.WRIST_STOW).asProxy(),
 
-        "L1 Outtake" to WristOuttake().asProxy(),
+        "L1 Outtake" to GroundOuttake().asProxy(),
 
         "Dispenser Intake" to DispenserManualIntake().asProxy(),
         "Dispenser Outtake" to DispenserOuttake().asProxy(),
 
-        "Elevator Stow" to SetElevator(TunedConstants.ELEVATOR_STOW_SETPOINT).asProxy(),
-        "Elevator L2" to SetElevator(TunedConstants.ELEVATOR_L2_SETPOINT).asProxy(),
-        "Elevator L3" to SetElevator(TunedConstants.ELEVATOR_L3_SETPOINT).asProxy(),
-        "Elevator L4" to SetElevator(TunedConstants.ELEVATOR_L4_SETPOINT).asProxy()
+        "Elevator Stow" to SetElevator(SetpointConstants.ELEVATOR_STOW).asProxy(),
+        "Elevator L2" to SetElevator(SetpointConstants.ELEVATOR_L2).asProxy(),
+        "Elevator L3" to SetElevator(SetpointConstants.ELEVATOR_L3).asProxy(),
+        "Elevator L4" to SetElevator(SetpointConstants.ELEVATOR_L4).asProxy()
 
     )
 

@@ -9,7 +9,6 @@ import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.math.trajectory.TrapezoidProfile
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Units.Pounds
-import org.sert2521.reefscape2025.PhysicalConstants.HALF_SIDE_LENGTH
 import kotlin.math.PI
 
 
@@ -54,7 +53,7 @@ object ElectronicIDs {
 
 }
 
-object TunedConstants {
+object SetpointConstants {
 
     const val DISPENSER_INTAKE_SPEED = 0.0
     const val DISPENSER_RESET_SPEED = 0.0
@@ -63,15 +62,15 @@ object TunedConstants {
     const val WRIST_OUTTAKE_SPEED = 0.0
     const val WRIST_INTAKE_SPEED = 0.0
 
-    const val WRIST_STOW_SETPOINT = 0.0
-    const val WRIST_GROUND_SETPOINT = 0.0
-    const val WRIST_L1_SETPOINT = 0.0
-    const val WRIST_ALGAE_SETPOINT = 0.0
+    const val WRIST_STOW = 0.0
+    const val WRIST_GROUND = 0.0
+    const val WRIST_L1 = 0.0
+    const val WRIST_ALGAE = 0.0
 
-    const val ELEVATOR_STOW_SETPOINT = 0.0
-    const val ELEVATOR_L2_SETPOINT = 0.0
-    const val ELEVATOR_L3_SETPOINT = 0.0
-    const val ELEVATOR_L4_SETPOINT = 0.0
+    const val ELEVATOR_STOW = 0.0
+    const val ELEVATOR_L2 = 0.0
+    const val ELEVATOR_L3 = 0.0
+    const val ELEVATOR_L4 = 0.0
 
 }
 
