@@ -13,11 +13,13 @@ object LEDsToWowTheCrow : SubsystemBase() {
     private val buffer = AddressableLEDBuffer(LEDConstants.LED_LENGTH)
 
     init{
+
         ledStrip.setLength(LEDConstants.LED_LENGTH)
         ledStrip.start()
     }
 
     fun setAll(color: Color) {
+
         for(i in 0..LEDConstants.LED_LENGTH) {
             buffer.setLED(i, color)
         }
