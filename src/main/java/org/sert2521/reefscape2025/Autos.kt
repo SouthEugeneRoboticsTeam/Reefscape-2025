@@ -12,6 +12,7 @@ import org.sert2521.reefscape2025.commands.dispenser.DispenserOuttake
 import org.sert2521.reefscape2025.commands.elevator.SetElevator
 import org.sert2521.reefscape2025.commands.wrist.SetWrist
 import org.sert2521.reefscape2025.commands.wristrollers.WristIntake
+import org.sert2521.reefscape2025.commands.wristrollers.WristOuttake
 import org.sert2521.reefscape2025.subsystems.Drivetrain
 
 /**
