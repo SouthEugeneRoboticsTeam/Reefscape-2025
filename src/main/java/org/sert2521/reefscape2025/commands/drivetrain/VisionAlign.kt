@@ -48,12 +48,12 @@ class VisionAlign(): Command() {
         error = sqrt( xError.pow(2) + yError.pow(2) )
 
         pidResult = drivePID.calculate(error, 0.0)
-        angleResult = anglePID.calculate(Drivetrain.getVisionPose().rotation.radians, angleTarget)
+        // angleResult = anglePID.calculate(Drivetrain.getVisionPose().rotation.radians, angleTarget)
 
         xResult = pidResult * cos(angle)
         yResult = pidResult * sin(angle)
 
-        Drivetrain.drive(ChassisSpeeds(xResult, yResult, angleResult))
+        Drivetrain.drive(ChassisSpeeds(-yResult, xResult, angleResult))
 
     }
 }

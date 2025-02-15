@@ -178,14 +178,24 @@ object DrivetrainConstants {
 class SwerveModuleData(val position: Translation2d, val driveMotorID: Int, val angleMotorID: Int, val angleEncoderID: Int, val angleOffset: Double, val inverted: Boolean){}
 
 object VisionTargetPositions {
-
     val reefPositions = mutableListOf(
-        Pose2d(3.2, 4.19, Rotation2d(0.0)), Pose2d(3.2, 3.86, Rotation2d(0.0)),
-        Pose2d(3.7, 2.99, Rotation2d(PI/3)), Pose2d(3.99, 2.83, Rotation2d(PI/3)),
-        Pose2d(4.99, 2.83, Rotation2d((2.0*PI)/3.0)), Pose2d(5.28, 2.98, Rotation2d((2.0*PI)/3.0)),
-        Pose2d(5.78, 3.86, Rotation2d(PI)), Pose2d(5.78, 4.19, Rotation2d(PI)),
-        Pose2d(5.28, 5.07, Rotation2d((-2.0*PI)/3.0)), Pose2d(4.99, 5.23, Rotation2d((-2.0*PI)/3.0)),
-        Pose2d(3.99, 5.23, Rotation2d(-PI/3.0)), Pose2d(3.70, 5.07, Rotation2d(-PI/3.0)),
+        Pose2d(3.2, 4.19, Rotation2d(0.0)),
+        Pose2d(3.2, 3.86, Rotation2d(0.0)),
+
+        Pose2d(3.7, 2.99, Rotation2d(PI/3)),
+        Pose2d(3.99, 2.83, Rotation2d(PI/3)),
+
+        Pose2d(4.99, 2.83, Rotation2d((2.0*PI)/3.0)),
+        Pose2d(5.28, 2.98, Rotation2d((2.0*PI)/3.0)),
+
+        Pose2d(5.78, 3.86, Rotation2d(PI)),
+        Pose2d(5.78, 4.19, Rotation2d(PI)),
+
+        Pose2d(5.28, 5.07, Rotation2d((-2.0*PI)/3.0)),
+        Pose2d(4.99, 5.23, Rotation2d((-2.0*PI)/3.0)),
+
+        Pose2d(3.99, 5.23, Rotation2d(-PI/3.0)),
+        Pose2d(3.70, 5.07, Rotation2d(-PI/3.0)),
         )
 
 }

@@ -304,8 +304,6 @@ object Drivetrain : SubsystemBase() {
 
     fun getYawAsRotation2d(): Rotation2d { return Rotation2d.fromDegrees(-imu.angle) }
 
-    fun getVisionPose(): Pose2d { return poseEstimator.estimatedPosition }
-
     fun getRelativeSpeeds(): ChassisSpeeds { return kinematics.toChassisSpeeds(*arrayOf(modules[0].state, modules[1].state, modules[2].state, modules[3].state)) } // Yes it says that the asterisk is wrong, but it is correct.
 
     fun getAbsoluteSpeeds(): ChassisSpeeds { return ChassisSpeeds.fromRobotRelativeSpeeds(getRelativeSpeeds(), getPose().rotation) }
@@ -354,10 +352,11 @@ object Drivetrain : SubsystemBase() {
                 mt2.timestampSeconds
             )
         }
-
     }
 
     fun getNearestTarget(): Pose2d { return getVisionPose().nearest(VisionTargetPositions.reefPositions) }
+
+    fun getVisionPose(): Pose2d { return Pose2d(poseEstimator.estimatedPosition.x, poseEstimator.estimatedPosition.y, pose.rotation) }
 
     fun stop() {
 
