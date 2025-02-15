@@ -53,7 +53,7 @@ class VisionAlign(): Command() {
         xResult = pidResult * cos(angle)
         yResult = pidResult * sin(angle)
 
-        Drivetrain.drive(ChassisSpeeds(-yResult, xResult, angleResult))
+        Drivetrain.drive(ChassisSpeeds(xResult, -yResult, angleResult))
 
     }
 }

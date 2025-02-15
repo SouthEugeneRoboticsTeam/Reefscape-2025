@@ -57,8 +57,8 @@ class JoystickDrive(private val fieldOriented: Boolean = true): Command() {
 
             Drivetrain.drive(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
-                    newY * DrivetrainConstants.DRIVE_SPEED,
                     newX * DrivetrainConstants.DRIVE_SPEED,
+                    newY * DrivetrainConstants.DRIVE_SPEED,
                     joystickZ().pow(3) * DrivetrainConstants.TURN_SPEED,
                     Drivetrain.getPose().rotation.minus(inputRotOffset())
                 )
@@ -68,8 +68,8 @@ class JoystickDrive(private val fieldOriented: Boolean = true): Command() {
 
             Drivetrain.drive(
                 ChassisSpeeds(
-                    newY * DrivetrainConstants.DRIVE_SPEED,
                     newX * DrivetrainConstants.DRIVE_SPEED,
+                    newY * DrivetrainConstants.DRIVE_SPEED,
                     joystickZ().pow(3) * DrivetrainConstants.TURN_SPEED
                 )
             )
